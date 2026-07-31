@@ -15,15 +15,15 @@
             Sinkronisasi Otomatis
         </button>
     </div>
-
+    
     <div class="flex justify-center font-verdana">
         <table class="w-[91%] border-collapse text-center mt-4">
-            <thead class="bg-blue-400">
+            <thead class="bg-blue-400 text-white">
                 <tr>
-                    <th class="border-2">MATA UANG</th>
-                    <th class="border-2">PECAHAN</th>
-                    <th class="border-2">BELI</th>
-                    <th class="border-2">JUAL</th>
+                    <th class="border-2 border-black">MATA UANG</th>
+                    <th class="border-2 border-black">PECAHAN</th>
+                    <th class="border-2 border-black">BELI</th>
+                    <th class="border-2 border-black">JUAL</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,15 +93,14 @@
 
     <h1 class="flex justify-center mt-4 font-verdana font-bold">Informasi Perusahaan</h1>
     
-    <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 p-4 text-justify font-verdana">
-        <p class="text-white">
+    <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 border-black p-4 text-justify font-verdana text-white">
+        <p>
             PT Bina Sukses Valasindo terletak di area Bandar Jaya Timur, Kecamatan Terbanggi Besar, Kabupaten Lampung Tengah. Tempat ini melayani kebutuhan masyarakat di sekitar Bandar Jaya dalam melakukan transaksi penukaran uang asing secara resmi. 
-            <br>
-            <br>
-            <ol class="text-white">
-                <li>Alamat: Bandar Jaya Timur, Kec. Terbanggi Besar, Kabupaten Lampung Tengah, Lampung 34163 </li>
-                <li>Jam Buka: Senin sampai Jumat pukul 08.10 sampai 16.00 WIB, Sabtu pukul 08.00 sampai 13.00 WIB (Minggu tidak buka).</li>
-            </ol>
         </p>
+        <br>
+        <ol class="list-decimal list-inside space-y-1">
+            <li>Alamat: Bandar Jaya Timur, Kec. Terbanggi Besar, Kabupaten Lampung Tengah, Lampung 34163 </li>
+            <li>Jam Buka: Senin sampai Jumat pukul 08.10 sampai 16.00 WIB, Sabtu pukul 08.00 sampai 13.00 WIB (Minggu tidak buka).</li>
+        </ol>
     </div>
 @include('layout.footer')
