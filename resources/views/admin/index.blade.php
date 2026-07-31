@@ -1,6 +1,6 @@
 @include('layout.header')
    <div class="flex justify-center text-center min-h-screen flex-col w-full">
-        <form action="{{ route('upload.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label for="file">Silahkan input file dibawah ini : </label> <br>
             <input type="file" name="file" id="file" accept=".xlsx,.xls" class="border border-solid border-black mt-4 bg-gray-200" required> <br>

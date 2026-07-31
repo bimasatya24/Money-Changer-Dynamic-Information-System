@@ -8,6 +8,10 @@ Route::get('/', function() {
     return view('home');
 })->name('home');
 
+Route::get('/admin/login', function() {
+    return view('admin.login.index');
+})->name('admin.login');
+
 Route::get('/display', function () {
     $allUpload = Upload::all();
 
@@ -16,4 +20,4 @@ Route::get('/display', function () {
     return view('display.index', compact('allUpload', 'lastUpdated'));
 })->name('display.index');
 
-Route::resource('upload', UploadController::class);
+Route::resource('admin', UploadController::class);

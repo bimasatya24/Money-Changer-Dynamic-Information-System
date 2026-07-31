@@ -15,7 +15,7 @@ class UploadController extends Controller
     public function index()
     {
         $allUpload = Upload::all();
-        return view('upload.index', compact('allUpload'));
+        return view('admin.index', compact('allUpload'));
     }
 
     /**
@@ -23,7 +23,7 @@ class UploadController extends Controller
      */
     public function create()
     {
-       return view('upload.index');
+       return view('admin.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class UploadController extends Controller
 
         Excel::import(new UploadExcelImport(), $request->file('file'));
 
-        return redirect()->route('upload.index')->with('success', 'Data Excel berhasil diimport!');
+        return redirect()->route('admin.index')->with('success', 'Data Excel berhasil diimport!');
     }
 
     /**
@@ -47,7 +47,7 @@ class UploadController extends Controller
      */
     public function show(Upload $upload)
     {
-        return view('upload.index');
+        return view('admin.index');
     }
 
     /**
