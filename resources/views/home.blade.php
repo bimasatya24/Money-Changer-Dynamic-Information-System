@@ -48,6 +48,49 @@
         </p>
     </div>
 
+    <h1 class="flex justify-center mt-4 font-verdana font-bold">Kantor Cabang</h1>
+    
+    <p class="flex justify-center font-verdana">3 Kantor Money Changer di seluruh Provinsi Lampung</p>
+
+    <div class="flex justify-center font-verdana">
+        <div class="bg-blue-400 border-2 mx-11 mt-4 p-4">
+            <h1 class="text-white font-bold">Kantor Tanjung Karang</h1>
+            <p class="text-white">
+                No. Telepon : +62 821-6311-0597
+                <br>
+                Jam Operasional :
+                <br>
+                Senin - Jum'at : 08.45 - 17.00
+                <br>
+                Sabtu : 08.45 - 14.30
+            </p>
+        </div>
+        <div class="bg-blue-400 border-2 mx-11 mt-4 p-4">
+            <h1 class="text-white font-bold">Kantor Teluk Betung</h1>
+            <p class="text-white">
+                No. Telepon : (0721) 482884 / 488288
+                <br>
+                Jam Operasional :
+                <br>
+                Senin - Jum'at : 08.30 - 16.30
+                <br>
+                Sabtu : 08.30 - 14.00
+            </p>
+        </div>
+        <div class="bg-blue-400 border-2 mx-11 mt-4 p-4">
+            <h1 class="text-white font-bold">Kantor Bandar Jaya</h1>
+            <p class="text-white">
+                No. Telepon : +62 857-8951-0332
+                <br>
+                Jam Operasional :
+                <br>
+                Senin - Jum'at : 08.30 - 16.30
+                <br>
+                Sabtu : 08.30 - 14.00
+            </p>
+        </div>
+    </div>
+
     <h1 class="flex justify-center mt-4 font-verdana font-bold">Informasi Perusahaan</h1>
     
     <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 p-4 text-justify font-verdana">
