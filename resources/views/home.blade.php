@@ -27,12 +27,26 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($allUpload as $r)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="border-2 border-black">
+                        {{ $r->MATA_UANG }}
+                    </td>
+                    <td class="border-2 border-black">
+                        {{ $r->PECAHAN }}
+                    </td>
+                    <td class="border-2 border-black">
+                        {{ $r->BELI < 1000 && fmod($r->BELI, 1) != 0 
+                        ? number_format($r->BELI, 2, ',', '.') 
+                        : number_format($r->BELI, 0, ',', '.') }}
+                    </td>
+                    <td class="border-2 border-black">
+                        {{ $r->JUAL < 1000 && fmod($r->JUAL, 1) != 0 
+                        ? number_format($r->JUAL, 2, ',', '.') 
+                        : number_format($r->JUAL, 0, ',', '.') }}
+                    </td>
                 </tr>
+                @endforeach
             </tbody>
             </table>
     </div>

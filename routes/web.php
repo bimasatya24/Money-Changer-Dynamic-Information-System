@@ -5,7 +5,9 @@ use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
-    return view('home');
+    $allUpload = Upload::all();
+    
+    return view('home', compact('allUpload'));
 })->name('home');
 
 Route::get('/admin/login', function() {
