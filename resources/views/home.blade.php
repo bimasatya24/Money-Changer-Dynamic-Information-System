@@ -8,10 +8,14 @@
     <div class="flex font-verdana mt-4">
         <search>
             <form>
-                <input type="search" name="" id="" placeholder="Pencarian" class="ml-14 pl-5 py-2 px-8 rounded-2xl border-2">
+                <div class="relative w-80 ml-14">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    <input type="search" name="" id="" placeholder="Pencarian" class="w-full py-2 pl-10 pr-4 rounded-2xl border-2">
+                </div>
             </form>
         </search>
         <button class="ml-5 pl-5 bg-blue-400 text-white py-2 px-16 cursor-pointer rounded-2xl border-black border-2">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
             Sinkronisasi Otomatis
         </button>
     </div>
