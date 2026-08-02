@@ -16,7 +16,7 @@
         </search>
         <button class="ml-5 pl-5 bg-blue-400 text-white py-2 px-16 cursor-pointer rounded-2xl border-black border-2">
             <i class="fa-solid fa-arrow-rotate-left"></i>
-            Sinkronisasi Otomatis
+            Sinkronisasi
         </button>
     </div>
     
