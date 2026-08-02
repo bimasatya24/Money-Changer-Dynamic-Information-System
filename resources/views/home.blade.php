@@ -10,7 +10,7 @@
             <form>
                 <div class="relative w-80 ml-14">
                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                    <input type="search" name="" id="" placeholder="Pencarian" class="w-full py-2 pl-10 pr-4 rounded-2xl border-2">
+                    <input type="search" name="" id="searchInput" placeholder="Pencarian" class="w-full py-2 pl-10 pr-4 rounded-2xl border-2">
                 </div>
             </form>
         </search>
@@ -30,7 +30,7 @@
                     <th class="border-2 border-black">JUAL</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="rateTableBody">
                 @foreach ($allUpload as $r)
                 <tr>
                     <td class="border-2 border-black">
@@ -52,7 +52,7 @@
                 </tr>
                 @endforeach
             </tbody>
-            </table>
+        </table>
     </div>
 
     <h1 class="flex justify-center mt-4 font-verdana font-bold">Company Profile</h1>
@@ -121,4 +121,21 @@
             <li>Jam Buka: Senin sampai Jumat pukul 08.10 sampai 16.00 WIB, Sabtu pukul 08.00 sampai 13.00 WIB (Minggu tidak buka).</li>
         </ol>
     </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const filterValue = this.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#rateTableBody tr');
+
+            rows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+
+                if (rowText.includes(filterValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
 @include('layout.footer')
