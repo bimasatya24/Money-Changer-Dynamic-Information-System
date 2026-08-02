@@ -1,9 +1,11 @@
 @include('layout.header')
     <ul class="list-none p-0 bg-blue-400 flex justify-center font-verdana">
-        <li class="float-left"><a href="" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Tabel Kurs Real-Time</a></li>
-        <li class="float-left"><a href="" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Company Profile</a></li>
-        <li class="float-left"><a href="" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Informasi Perusahaan</a></li>
+        <li class="float-left"><a href="#tabel-kurs-real-time" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Tabel Kurs Real-Time</a></li>
+        <li class="float-left"><a href="#company-profile" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Company Profile</a></li>
+        <li class="float-left"><a href="#informasi-perusahaan" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Informasi Perusahaan</a></li>
     </ul>
+
+    <h1 id="tabel-kurs-real-time" class="flex justify-center mt-4 font-verdana font-bold">Tabel Kurs Real-Time</h1>
 
     <div class="flex font-verdana mt-4">
         <search>
@@ -55,7 +57,7 @@
         </table>
     </div>
 
-    <h1 class="flex justify-center mt-4 font-verdana font-bold">Company Profile</h1>
+    <h1 id="company-profile" class="flex justify-center mt-16 font-verdana font-bold">Company Profile</h1>
     
     <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 p-4 text-justify font-verdana">
         <p class="text-white">
@@ -66,12 +68,12 @@
         </p>
     </div>
 
-    <h1 class="flex justify-center mt-4 font-verdana font-bold">Kantor Cabang</h1>
+    <h1 class="flex justify-center font-verdana font-bold mt-4">Kantor Cabang</h1>
     
     <p class="flex justify-center font-verdana">3 Kantor Money Changer di seluruh Provinsi Lampung</p>
 
     <div class="flex justify-center font-verdana">
-        <div class="bg-blue-400 border-2 mx-11 mt-4 p-4">
+        <div class="bg-blue-400 border-2 mx-11 mt-4 p-3.5">
             <h1 class="text-white font-bold">Kantor Tanjung Karang</h1>
             <p class="text-white">
                 No. Telepon : +62 821-6311-0597
@@ -109,7 +111,7 @@
         </div>
     </div>
 
-    <h1 class="flex justify-center mt-4 font-verdana font-bold">Informasi Perusahaan</h1>
+    <h1 id="informasi-perusahaan" class="flex justify-center mt-16 font-verdana font-bold">Informasi Perusahaan</h1>
     
     <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 border-black p-4 text-justify font-verdana text-white">
         <p>
