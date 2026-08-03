@@ -1,18 +1,23 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function() {
+Route::get('/', function () {
     $allUpload = Upload::all();
-    
+
     return view('home', compact('allUpload'));
 })->name('home');
 
-Route::get('/admin/login', function() {
+Route::get('/admin/login', function () {
     return view('admin.login.index');
-})->name('admin.login');
+})->name('login');
+
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');
+
+Route::resource('admin', UploadController::class)->middleware('auth');
 
 Route::get('/display', function () {
     $allUpload = Upload::all();
@@ -21,5 +26,3 @@ Route::get('/display', function () {
 
     return view('display.index', compact('allUpload', 'lastUpdated'));
 })->name('display.index');
-
-Route::resource('admin', UploadController::class);
