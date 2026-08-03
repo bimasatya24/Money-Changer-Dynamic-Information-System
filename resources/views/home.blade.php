@@ -89,6 +89,9 @@
             <div class="mt-3">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.9952311825614!2d105.25108147354263!3d-5.417692654095081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40da5083c07229%3A0xaeb929b36ce55188!2sMoney%20Changer%20PT.%20Bina%20Sukses%20Valasindo!5e0!3m2!1sid!2sid!4v1785677896959!5m2!1sid!2sid" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="rounded border border-black"></iframe>
             </div>
+            <a href="http://wa.me/6282163110597" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-orange-300 font-semibold">
+                +62 821-6311-0597 (Chat Via WhatsApp)
+            </a>
         </div>
         <div class="bg-blue-400 border-2 mx-11 mt-4 p-4">
             <h1 class="text-white font-bold">Kantor Teluk Betung</h1>
@@ -123,6 +126,9 @@
             <div class="mt-3">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.03878828129!2d105.20950127353615!3d-4.933164150484241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40a884cc66ef45%3A0xa8bb5d73699ecf49!2sPT.%20Bina%20Sukses%20Valasindo!5e0!3m2!1sid!2sid!4v1785677732181!5m2!1sid!2sid" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="rounded border border-black"></iframe>
             </div>
+            <a href="http://wa.me/+6285369667788" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-orange-300 font-semibold">
+                +62 853-6966-7788 (Chat Via WhatsApp)
+            </a>
         </div>
     </div>
 
