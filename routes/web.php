@@ -26,3 +26,7 @@ Route::get('/display', function () {
 
     return view('display.index', compact('allUpload', 'lastUpdated'));
 })->name('display.index');
+
+Route::get('/api/rates', function () {
+    return response()->json(Upload::all());
+})->name('api.rates');

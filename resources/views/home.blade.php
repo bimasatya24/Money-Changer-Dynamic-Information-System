@@ -16,7 +16,7 @@
                 </div>
             </form>
         </search>
-        <button class="ml-5 pl-5 bg-blue-400 text-white py-2 px-16 cursor-pointer rounded-2xl border-black border-2">
+        <button id="syncBtn" class="ml-5 pl-5 bg-blue-400 text-white py-2 px-16 cursor-pointer rounded-2xl border-black border-2">
             <i class="fa-solid fa-arrow-rotate-left"></i>
             Sinkronisasi
         </button>
@@ -159,6 +159,55 @@
                     row.style.display = 'none';
                 }
             });
+        });
+
+        document.getElementById('syncBtn').addEventListener('click', function() {
+            const btnIcon = this.querySelector('i');
+            btnIcon.classList.add('fa-spin');
+
+            fetch('{{ route("api.rates") }}')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('rateTableBody');
+                    tbody.innerHTML = '';
+
+                    if (!data || data.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="4" class="border-2 border-black py-4">Belum ada data kurs.</td></tr>`;
+                    } else {
+                        data.forEach(r => {
+                            const beli = parseFloat(r.BELI);
+                            const jual = parseFloat(r.JUAL);
+
+                            const formatBeli = (beli < 1000 && (beli % 1 !== 0))
+                                ? beli.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                : Math.round(beli).toLocaleString('id-ID');
+
+                            const formatJual = (jual < 1000 && (jual % 1 !== 0))
+                                ? jual.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                : Math.round(jual).toLocaleString('id-ID');
+
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td class="border-2 border-black">${r.MATA_UANG}</td>
+                                    <td class="border-2 border-black">${r.PECAHAN}</td>
+                                    <td class="border-2 border-black">${formatBeli}</td>
+                                    <td class="border-2 border-black">${formatJual}</td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    // Terapkan filter pencarian kembali jika sedang mencari
+                    document.getElementById('searchInput').dispatchEvent(new Event('input'));
+                })
+                .catch(err => {
+                    console.error('Gagal sinkronisasi data:', err);
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        btnIcon.classList.remove('fa-spin');
+                    }, 500);
+                });
         });
     </script>
 @include('layout.footer')
