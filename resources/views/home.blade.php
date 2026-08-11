@@ -2,7 +2,7 @@
     <ul class="list-none p-0 bg-blue-400 flex justify-center font-verdana">
         <li class="float-left"><a href="#tabel-kurs-real-time" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Tabel Kurs Real-Time</a></li>
         <li class="float-left"><a href="#company-profile" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Company Profile</a></li>
-        <li class="float-left"><a href="#informasi-perusahaan" class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Informasi Perusahaan</a></li>
+        <li class="float-left"><a class="block text-white px-4 py-3.5 no-underline hover:bg-white hover:text-black">Kasir</a></li>
     </ul>
 
     <h1 id="tabel-kurs-real-time" class="flex justify-center mt-4 font-verdana font-bold">Tabel Kurs Real-Time</h1>
@@ -130,19 +130,6 @@
                 +62 853-6966-7788 (Chat Via WhatsApp)
             </a>
         </div>
-    </div>
-
-    <h1 id="informasi-perusahaan" class="flex justify-center mt-16 font-verdana font-bold">Informasi Perusahaan</h1>
-    
-    <div class="bg-blue-400 ml-14 mr-14 mt-4 border-2 border-black p-4 text-justify font-verdana text-white">
-        <p>
-            PT Bina Sukses Valasindo terletak di area Bandar Jaya Timur, Kecamatan Terbanggi Besar, Kabupaten Lampung Tengah. Tempat ini melayani kebutuhan masyarakat di sekitar Bandar Jaya dalam melakukan transaksi penukaran uang asing secara resmi. 
-        </p>
-        <br>
-        <ol class="list-decimal list-inside space-y-1">
-            <li>Alamat: Bandar Jaya Timur, Kec. Terbanggi Besar, Kabupaten Lampung Tengah, Lampung 34163 </li>
-            <li>Jam Buka: Senin sampai Jumat pukul 08.10 sampai 16.00 WIB, Sabtu pukul 08.00 sampai 13.00 WIB (Minggu tidak buka).</li>
-        </ol>
     </div>
 
     <script>
