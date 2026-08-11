@@ -117,9 +117,9 @@
                 <br>
                 Jam Operasional :
                 <br>
-                Senin - Jum'at : 08.30 - 16.30
+                Senin - Jum'at : 08.10 - 16.00
                 <br>
-                Sabtu : 08.30 - 14.00
+                Sabtu : 08.00 - 13.00
                 <br>
                 Minggu & Hari Libur Nasional : Tutup
             </p>
