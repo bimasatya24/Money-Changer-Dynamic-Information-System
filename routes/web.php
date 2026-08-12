@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UploadController;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
+
 
 Route::get('/', function () {
     $allUpload = Upload::all();
