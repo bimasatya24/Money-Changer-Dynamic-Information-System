@@ -56,4 +56,53 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function getBgColorClass(index) {
+            const group = Math.floor(index / 5) % 5;
+            switch(group) {
+                case 0: return 'bg-[#fff9c4]';
+                case 1: return 'bg-[#c8e6c9]';
+                case 2: return 'bg-[#b3e5fc]';
+                case 3: return 'bg-[#ffccbc]';
+                case 4: return 'bg-[#ffcc80]';
+                default: return 'bg-[#fff9c4]';
+            }
+        }
+        function formatNumber(val) {
+            const num = parseFloat(val);
+            if (isNaN(num)) return '-';
+            if (num < 1000 && (num % 1 !== 0)) {
+                return num.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            return Math.round(num).toLocaleString('id-ID');
+        }
+        function fetchLiveRates() {
+            fetch('{{ route("api.rates") }}')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('displayTableBody');
+                    if (!tbody) return;
+                    tbody.innerHTML = '';
+                    data.forEach((r, index) => {
+                        const bgColor = getBgColorClass(index);
+                        const formatBeli = formatNumber(r.BELI);
+                        const formatJual = formatNumber(r.JUAL);
+                        tbody.innerHTML += `
+                            <tr class="${bgColor} font-verdana text-[32px] font-bold transition-all duration-300">
+                                <td class="border border-slate-300 p-2 align-middle">${r.MATA_UANG}</td>
+                                <td class="border border-slate-300 p-2 align-middle">${r.PECAHAN}</td>
+                                <td class="border border-slate-300 p-2 align-middle">${formatBeli}</td>
+                                <td class="border border-slate-300 p-2 align-middle">${formatJual}</td>
+                            </tr>
+                        `;
+                    });
+                    const now = new Date();
+                    const options = { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+                    document.getElementById('lastUpdatedText').innerText = now.toLocaleDateString('id-ID', options).replace('.', ':');
+                })
+                .catch(err => console.error('Error fetching live rates:', err));
+        }
+        setInterval(fetchLiveRates, 15000);
+    </script>
 @include('layout.footer')
