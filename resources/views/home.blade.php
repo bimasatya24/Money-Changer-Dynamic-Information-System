@@ -258,6 +258,14 @@
 
 </main>
 
+<button
+    id="scrollToTop"
+    onclick="scrollToTop()"
+    class="fixed bottom-5 right-5 btn btn-circle bg-black text-white border-2 border-white shadow-lg hidden z-50 hover:bg-gray-800"
+    title="Scroll ke atas">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+
 <script>
     document.getElementById('searchInput').addEventListener('input', function() {
         const filterValue = this.value.toLowerCase().trim();
@@ -324,6 +332,23 @@
                 setTimeout(() => btnIcon.classList.remove('fa-spin'), 1000);
             });
     });
+
+    window.addEventListener('scroll', function () {
+        const button = document.getElementById('scrollToTop');
+
+        if (window.scrollY > 300) {
+            button.classList.remove('hidden');
+        } else {
+            button.classList.add('hidden');
+        }
+    });
+
+    function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
 </script>
 
 @include('layout.footer')
