@@ -3,6 +3,10 @@
 <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-verdana">
     <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-2.5">
         <div class="flex items-center space-x-2">
+             <a href="#kalkulator-valas"
+                class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
+                {{ __('Kalkulator Konversi Valas') }}
+            </a>
             <a href="#tabel-kurs-real-time"
                 class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Tabel Kurs Real-Time') }}
@@ -31,8 +35,84 @@
 
 <main class="container mx-auto px-4 py-8 max-w-6xl font-verdana">
 
-    <section id="tabel-kurs-real-time" class="scroll-mt-20">
-        <div class="text-center mb-6">
+    <section class="scroll-mt-20">
+        <section id="kalkulator-valas" class="mb-12 scroll-mt-20">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                            {{ __('Kalkulator Konversi Valas') ?? 'Kalkulator Konversi Valas' }}
+                        </h2>
+                        <p class="text-xs md:text-sm text-gray-500">
+                            {{ __('Hitung estimasi nilai tukar valuta asing Anda secara instan') ?? 'Hitung estimasi nilai tukar valuta asing Anda secara instan' }}
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Pilihan Tipe Transaksi (Tabs) --}}
+                <div class="flex bg-gray-100 p-1.5 rounded-xl mb-6 max-w-md">
+                    <button type="button" id="tabBeli" onclick="setCalcType('beli')" 
+                            class="flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all bg-blue-600 text-white shadow">
+                        {{ __('Kami Jual') ?? 'Kami Jual' }}
+                    </button>
+                    <button type="button" id="tabJual" onclick="setCalcType('jual')" 
+                            class="flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all text-gray-600 hover:text-gray-900">
+                        {{ __('Kami Beli') ?? 'Kami Beli' }}
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    {{-- Form Input --}}
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                                {{ __('Pilih Mata Uang') ?? 'Pilih Mata Uang' }}
+                            </label>
+                            <select id="calcCurrency" class="w-full py-2.5 px-4 bg-gray-50 border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+                                @foreach ($allUpload as $r)
+                                    <option value="{{ $r->MATA_UANG }}" 
+                                            data-beli="{{ $r->BELI }}" 
+                                            data-jual="{{ $r->JUAL }}"
+                                            data-pecahan="{{ $r->PECAHAN }}">
+                                        {{ $r->MATA_UANG }} ({{ $r->PECAHAN }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                                {{ __('Jumlah / Nominal Valas') ?? 'Jumlah / Nominal Valas' }}
+                            </label>
+                            <input type="number" id="calcAmount" value="100" min="1" step="any" placeholder="Contoh: 100"
+                                   class="w-full py-2.5 px-4 bg-gray-50 border border-gray-300 rounded-xl text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    {{-- Hasil Konversi (Card Preview) --}}
+                    <div class="bg-blue-50/60 border border-blue-100 rounded-2xl p-6 flex flex-col justify-between h-full">
+                        <div>
+                            <span id="calcLabelResult" class="text-xs font-bold uppercase tracking-wider text-blue-700">
+                                {{ __('Estimasi Total yang Harus Dibayar') ?? 'Estimasi Total yang Harus Dibayar' }}:
+                            </span>
+                            <div class="text-2xl md:text-3xl font-extrabold text-blue-900 mt-2" id="calcResultDisplay">
+                                Rp 0
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-blue-200/60 flex items-center justify-between text-xs text-gray-600 font-medium">
+                            <span>{{ __('Kurs Acuan') ?? 'Kurs Acuan' }}:</span>
+                            <span id="calcRateInfo" class="font-bold text-blue-800">1 USD = Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="tabel-kurs-real-time" class="text-center mb-6">
             <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
                 {{ __('Katalog Nilai Tukar Valuta Asing') ?? 'Live Catalog' }}
             </span>
@@ -349,6 +429,59 @@
         behavior: 'smooth'
     });
 }
+    let currentCalcType = 'beli';
+
+    function setCalcType(type) {
+        currentCalcType = type;
+        const tabBeli = document.getElementById('tabBeli');
+        const tabJual = document.getElementById('tabJual');
+        const labelResult = document.getElementById('calcLabelResult');
+
+        if (type === 'beli') {
+            tabBeli.className = 'flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all bg-blue-600 text-white shadow';
+            tabJual.className = 'flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all text-gray-600 hover:text-gray-900';
+            labelResult.innerText = "{{ __('Estimasi Total yang Harus Dibayar') }} (IDR):";
+        } else {
+            tabJual.className = 'flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all bg-blue-600 text-white shadow';
+            tabBeli.className = 'flex-1 py-2 rounded-lg text-xs md:text-sm font-bold transition-all text-gray-600 hover:text-gray-900';
+            labelResult.innerText = "{{ __('Estimasi Total yang Anda Dapatkan') }} (IDR):";
+        }
+        calculateConversion();
+    }
+
+    function calculateConversion() {
+        const select = document.getElementById('calcCurrency');
+        const amountInput = document.getElementById('calcAmount');
+        const resultDisplay = document.getElementById('calcResultDisplay');
+        const rateInfo = document.getElementById('calcRateInfo');
+
+        if (!select || !select.selectedOptions.length) return;
+
+        const selectedOption = select.selectedOptions[0];
+        const currency = selectedOption.value;
+        const rateBeli = parseFloat(selectedOption.getAttribute('data-beli')) || 0;
+        const rateJual = parseFloat(selectedOption.getAttribute('data-jual')) || 0;
+        const amount = parseFloat(amountInput.value) || 0;
+
+        // Jika Beli Valas ➔ gunakan kurs Jual Money Changer. Jika Jual Valas ➔ gunakan kurs Beli Money Changer.
+        const activeRate = currentCalcType === 'beli' ? rateJual : rateBeli;
+        const totalIDR = amount * activeRate;
+
+        // Format angka ke Rupiah
+        const formattedTotal = totalIDR.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        const formattedRate = activeRate.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+        resultDisplay.innerText = `Rp ${formattedTotal}`;
+        rateInfo.innerText = `1 ${currency} = Rp ${formattedRate}`;
+    }
+
+    // Jalankan event listener saat input berubah
+    document.getElementById('calcCurrency').addEventListener('change', calculateConversion);
+    document.getElementById('calcAmount').addEventListener('input', calculateConversion);
+
+    // Hitung otomatis pertama kali saat halaman dimuat
+    calculateConversion();
+
 </script>
 
 @include('layout.footer')
