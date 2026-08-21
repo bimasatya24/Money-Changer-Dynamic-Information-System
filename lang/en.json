@@ -4,6 +4,7 @@
     "Company Profile": "Company Profile",
     "Kasir": "Cashier",
     "Katalog Nilai Tukar Valuta Asing": "Foreign Currency Exchange Rate Catalog",
+    "Harga terbaik dan kompetitif untuk kebutuhan penukaran mata uang Anda" : "Competitive and up-to-date foreign exchange rates",
     "Pencarian": "Search",
     "Sinkronisasi": "Sync",
     "MATA UANG": "CURRENCY",
@@ -43,5 +44,9 @@
     "Jumlah / Nominal Valas": "Currency Amount",
     "Estimasi Total yang Harus Dibayar": "Estimated Total to Pay",
     "Estimasi Total yang Anda Dapatkan": "Estimated Total You Receive",
-    "Kurs Acuan": "Reference Rate"
+    "Kurs Acuan": "Reference Rate",
+    "TREN 7 HARI": "7-DAY TREND",
+    "TREN": "TREND",
+    "7 Hari": "7 Days",
+    "1 Bulan": "1 Month"
 }
