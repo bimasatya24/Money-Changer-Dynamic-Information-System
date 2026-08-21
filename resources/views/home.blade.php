@@ -130,17 +130,11 @@
 
         <div
             class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="relative w-full md:w-96">
+            <div class="relative w-full">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="search" id="searchInput" placeholder="{{ __('Pencarian') }}..."
                     class="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
             </div>
-
-            <button id="syncBtn"
-                class="w-full md:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm py-2.5 px-6 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer">
-                <i class="fa-solid fa-arrow-rotate-left"></i>
-                <span>{{ __('Sinkronisasi') }}</span>
-            </button>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
@@ -581,75 +575,6 @@
         initAllSparklines();
     });
 
-    document.getElementById('syncBtn').addEventListener('click', function() {
-        const btnIcon = this.querySelector('i');
-        btnIcon.classList.add('fa-spin');
-
-        fetch('{{ route('api.rates') }}')
-            .then(response => response.json())
-            .then(data => {
-                const tbody = document.getElementById('rateTableBody');
-                tbody.innerHTML = '';
-
-                if (!data || data.length === 0) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="5" class="py-6 text-center text-gray-500 font-medium">{{ __('Belum ada data kurs.') }}</td></tr>`;
-                } else {
-                    data.forEach(r => {
-                        const beli = parseFloat(r.BELI);
-                        const jual = parseFloat(r.JUAL);
-                        const cleanId = (r.MATA_UANG + '_' + r.PECAHAN).replace(/[^A-Za-z0-9]/g,
-                            '');
-
-                        const formatBeli = (beli < 1000 && (beli % 1 !== 0)) ?
-                            beli.toLocaleString('id-ID', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }) :
-                            Math.round(beli).toLocaleString('id-ID');
-
-                        const formatJual = (jual < 1000 && (jual % 1 !== 0)) ?
-                            jual.toLocaleString('id-ID', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }) :
-                            Math.round(jual).toLocaleString('id-ID');
-
-                        tbody.innerHTML += `
-                                <tr class="hover:bg-blue-50/60 transition-colors">
-                                    <td class="py-3.5 px-4 text-left pl-6 font-bold text-blue-900 flex items-center gap-2">
-                                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                        <span class="bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200 text-xs font-bold text-gray-800 tracking-wider">
-                                            ${r.MATA_UANG}
-                                        </span>
-                                    </td>
-                                    <td class="py-3.5 px-4 font-semibold text-gray-600">${r.PECAHAN}</td>
-                                    <td class="py-3.5 px-4 font-bold text-emerald-600 bg-emerald-50/40">${formatBeli}</td>
-                                    <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/40">${formatJual}</td>
-                                    <td class="py-2 px-4 text-center">
-                                        <div class="flex items-center justify-center gap-2">
-                                            <div class="w-28 h-9">
-                                                <canvas id="chart-${cleanId}" class="w-full h-full sparkline-canvas" data-base-rate="${beli}" data-currency="${cleanId}"></canvas>
-                                            </div>
-                                            <span id="badge-${cleanId}" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">
-                                                +0.00%
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                    });
-                    initAllSparklines();
-                }
-
-                document.getElementById('searchInput').dispatchEvent(new Event('input'));
-            })
-            .catch(err => console.error('Gagal sinkronisasi:', err))
-            .finally(() => {
-                setTimeout(() => btnIcon.classList.remove('fa-spin'), 1000);
-            });
-    });
-
     window.addEventListener('scroll', function() {
         const button = document.getElementById('scrollToTop');
 
@@ -728,6 +653,61 @@
 
     // Hitung otomatis pertama kali saat halaman dimuat
     calculateConversion();
+
+    function fetchLiveRates() {
+        fetch('{{ route('api.rates') }}')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data kurs');
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                const tbody = document.getElementById('displayTableBody');
+                if (!tbody) return;
+
+                tbody.innerHTML = '';
+
+                data.forEach((r, index) => {
+                    const bgColor = getBgColorClass(index);
+                    const formatBeli = formatNumber(r.BELI);
+                    const formatJual = formatNumber(r.JUAL);
+
+                    tbody.innerHTML += `
+                    <tr class="${bgColor} font-verdana text-[32px] font-bold transition-all duration-300">
+                        <td class="border border-slate-300 p-2 align-middle">${r.MATA_UANG}</td>
+                        <td class="border border-slate-300 p-2 align-middle">${r.PECAHAN}</td>
+                        <td class="border border-slate-300 p-2 align-middle">${formatBeli}</td>
+                        <td class="border border-slate-300 p-2 align-middle">${formatJual}</td>
+                    </tr>
+                `;
+                });
+
+                // Waktu halaman menerima data terbaru
+                const now = new Date();
+
+                const options = {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+
+                document.getElementById('lastUpdatedText').innerText =
+                    now.toLocaleDateString('id-ID', options).replace('.', ':');
+            })
+            .catch(err => {
+                console.error('Error fetching live rates:', err);
+            });
+    }
+
+    // Ambil data ketika halaman pertama kali dibuka
+    fetchLiveRates();
+
+    // Ambil ulang data setiap 15 detik
+    setInterval(fetchLiveRates, 15000);
 </script>
 
 @include('layout.footer')
