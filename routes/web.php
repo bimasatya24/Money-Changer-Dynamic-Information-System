@@ -34,3 +34,7 @@ Route::get('/display', function () {
 Route::get('/api/rates', function () {
     return response()->json(Upload::all());
 })->name('api.rates');
+
+Route::get('/pesan-antar', function() {
+    return view('pesan-antar');
+})->name('pesan-antar');
