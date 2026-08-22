@@ -48,9 +48,19 @@
             </h2>
         </div>
 
-        {{-- Form --}}
-        <form>
+        @if ($errors->any())
+            <div class="mb-5 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
+        {{-- Form --}}
+        <form action="{{ route('customer.register.post') }}" method="POST">
+            @csrf
             {{-- Nama --}}
             <div class="mb-5">
                 <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -60,32 +70,8 @@
                 <div class="relative">
                     <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
 
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="{{ __('Masukkan nama Anda') }}"
-                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                </div>
-            </div>
-
-            {{-- Email --}}
-            <div class="mb-5">
-                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
-                    {{ __('Email') }}
-                </label>
-
-                <div class="relative">
-                    <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="{{ __('Masukkan email Anda') }}"
-                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
+                    <input type="text" id="name" name="name" placeholder="{{ __('Masukkan nama Anda') }}"
+                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
             </div>
 
@@ -98,21 +84,15 @@
                 <div class="relative">
                     <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
+                    <input type="password" id="password" name="password"
                         placeholder="{{ __('Masukkan password Anda') }}"
-                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
+                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
             </div>
 
             {{-- Tombol --}}
-            <button
-                type="button"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-sm font-bold transition-colors"
-            >
+            <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-sm font-bold transition-colors">
                 <i class="fa-solid fa-user-plus mr-2"></i>
                 {{ __('Daftar') }}
             </button>
@@ -124,8 +104,7 @@
             <p class="text-sm text-gray-500">
                 {{ __('Sudah punya akun?') }}
 
-                <a href="{{ route('customer.login') }}"
-                    class="text-blue-600 hover:text-blue-700 font-bold">
+                <a href="{{ route('customer.login') }}" class="text-blue-600 hover:text-blue-700 font-bold">
                     {{ __('Masuk') }}
                 </a>
             </p>

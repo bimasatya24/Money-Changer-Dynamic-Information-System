@@ -39,10 +39,23 @@ Route::get('/pesan-antar', function() {
     return view('pesan-antar');
 })->name('pesan-antar');
 
+// =========================
+// AUTH PELANGGAN
+// =========================
+
 Route::get('/register', function () {
     return view('auth.register');
 })->name('customer.register');
 
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('customer.register.post');
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('customer.login');
+
+Route::post('/login', [AuthController::class, 'customerLogin'])
+    ->name('customer.login.post');
+
+Route::post('/logout', [AuthController::class, 'customerLogout'])
+    ->name('customer.logout');
