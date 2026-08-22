@@ -38,3 +38,11 @@ Route::get('/api/rates', function () {
 Route::get('/pesan-antar', function() {
     return view('pesan-antar');
 })->name('pesan-antar');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('customer.register');
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('customer.login');

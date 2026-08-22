@@ -74,11 +74,11 @@
                 {{ __('Belum memiliki akun? Daftarkan diri Anda terlebih dahulu untuk menggunakan layanan pesan antar.') }}
             </p>
 
-            <button type="button"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <a href="{{ route('customer.register') }}"
+                class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
                 <i class="fa-solid fa-user-plus mr-2"></i>
                 {{ __('Registrasi Akun') }}
-            </button>
+            </a>
 
         </div>
 
@@ -97,11 +97,11 @@
                 {{ __('Masuk ke akun Anda untuk melanjutkan ke proses pemesanan valuta asing.') }}
             </p>
 
-            <button type="button"
-                class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <a href="{{ route('customer.login') }}"
+                class="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-800 py-2.5 rounded-xl text-sm font-bold transition-colors">
                 <i class="fa-solid fa-right-to-bracket mr-2"></i>
                 {{ __('Masuk Akun') }}
-            </button>
+            </a>
 
         </div>
 
