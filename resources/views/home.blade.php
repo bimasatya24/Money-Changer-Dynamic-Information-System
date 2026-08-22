@@ -52,9 +52,6 @@
                         <h2 class="text-xl md:text-2xl font-bold text-gray-800">
                             {{ __('Kalkulator Konversi Valas') ?? 'Kalkulator Konversi Valas' }}
                         </h2>
-                        <p class="text-xs md:text-sm text-gray-500">
-                            {{ __('Hitung estimasi nilai tukar valuta asing Anda secara instan') ?? 'Hitung estimasi nilai tukar valuta asing Anda secara instan' }}
-                        </p>
                     </div>
                 </div>
 
@@ -121,15 +118,9 @@
         </section>
 
         <div id="tabel-kurs-real-time" class="text-center mb-6">
-            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                {{ __('Katalog Nilai Tukar Valuta Asing') ?? 'Live Catalog' }}
-            </span>
             <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mt-2">
                 {{ __('Tabel Kurs Real-Time') }}
             </h2>
-            <p class="text-sm text-gray-500 mt-1">
-                {{ __('Harga terbaik dan kompetitif untuk kebutuhan penukaran mata uang Anda') }}
-            </p>
         </div>
 
         <div
@@ -233,9 +224,6 @@
                     <h2 class="text-xl md:text-2xl font-bold text-gray-800">
                         {{ __('Company Profile') }}
                     </h2>
-                    <span class="text-xs text-blue-600 font-semibold tracking-wide uppercase">
-                        PT Bina Sukses Valasindo
-                    </span>
                 </div>
             </div>
 

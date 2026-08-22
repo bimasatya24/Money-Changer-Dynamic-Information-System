@@ -46,10 +46,6 @@
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
                         {{ __('Pesan Antar Valuta Asing') }}
                     </h2>
-
-                    <p class="text-sm text-gray-500 mt-1">
-                        {{ __('Pesan valuta asing dan dapatkan layanan pengantaran sesuai kebutuhan Anda.') }}
-                    </p>
                 </div>
             </div>
 
