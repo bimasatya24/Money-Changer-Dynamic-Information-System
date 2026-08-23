@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\CustomerController;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
@@ -59,3 +60,21 @@ Route::post('/login', [AuthController::class, 'customerLogin'])
 
 Route::post('/logout', [AuthController::class, 'customerLogout'])
     ->name('customer.logout');
+
+// =========================
+// PESAN ANTAR - PELANGGAN
+// =========================
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/pesan-antar/ktp', [CustomerController::class, 'ktp'])
+        ->name('customer.ktp');
+
+    Route::post('/pesan-antar/ktp', [CustomerController::class, 'saveKtp'])
+        ->name('customer.ktp.save');
+
+    Route::get('/pesan-antar/pesanan', function () {
+        return view('customer.order');
+    })->name('customer.order');
+
+});

@@ -63,5 +63,17 @@
     "Sudah punya akun?": "Already have an account?",
     "Belum punya akun?": "Don't have an account?",
     "Masuk": "Sign In",
-    "Registrasi": "Registration"
+    "Registrasi": "Registration",
+    "Data KTP": "ID Card Information",
+    "Lengkapi Data KTP": "Complete ID Card Information",
+    "Data KTP wajib dilengkapi sebelum melakukan pemesanan.": "ID card information must be completed before placing an order.",
+    "Nama sesuai KTP": "Name as shown on ID Card",
+    "NIK": "National ID Number",
+    "Nomor Telepon": "Phone Number",
+    "RT/RW": "Neighborhood Unit",
+    "Kelurahan/Desa": "Village/Subdistrict",
+    "Kecamatan": "District",
+    "Alamat KTP": "ID Card Address",
+    "Pekerjaan": "Occupation",
+    "Lanjut ke Pesanan": "Continue to Order"
 }

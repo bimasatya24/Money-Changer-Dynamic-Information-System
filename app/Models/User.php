@@ -21,6 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'ktp_name',
+        'nik',
+        'phone',
+        'ktp_address',
+        'rt_rw',
+        'kelurahan_desa',
+        'kecamatan',
+        'occupation',
     ];
 
     /**
