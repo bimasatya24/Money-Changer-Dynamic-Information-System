@@ -75,5 +75,15 @@
     "Kecamatan": "District",
     "Alamat KTP": "ID Card Address",
     "Pekerjaan": "Occupation",
-    "Lanjut ke Pesanan": "Continue to Order"
+    "Lanjut ke Pesanan": "Continue to Order",
+    "Lokasi Antar": "Delivery Location",
+    "Lokasi Pengantaran": "Delivery Location",
+    "Tentukan lokasi pengantaran pada peta.": "Set the delivery location on the map.",
+    "Gunakan Lokasi Saya": "Use My Location",
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "Lanjut": "Continue",
+    "Lokasi pengantaran": "Delivery location",
+    "Perangkat Anda tidak mendukung lokasi.": "Your device does not support location services.",
+    "Lokasi tidak dapat diperoleh. Pastikan izin lokasi telah diberikan.": "Unable to obtain your location. Please make sure location permission has been granted."
 }

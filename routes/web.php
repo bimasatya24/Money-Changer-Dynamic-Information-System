@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
         ->name('customer.ktp.save');
 
     Route::get('/pesan-antar/pesanan', function () {
-        return view('customer.order');
-    })->name('customer.order');
+        return view('customer.location');
+    })->name('customer.location');
 
 });

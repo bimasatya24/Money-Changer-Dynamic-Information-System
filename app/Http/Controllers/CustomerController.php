@@ -30,7 +30,7 @@ class CustomerController extends Controller
         auth::user()->update($validated);
 
         return redirect()
-            ->route('customer.order')
+            ->route('customer.location')
             ->with('success', 'Data KTP berhasil disimpan.');
     }
 }
