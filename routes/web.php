@@ -73,8 +73,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/pesan-antar/ktp', [CustomerController::class, 'saveKtp'])
         ->name('customer.ktp.save');
 
-    Route::get('/pesan-antar/pesanan', function () {
-        return view('customer.location');
-    })->name('customer.location');
+    Route::get('/pesan-antar/lokasi', [CustomerController::class, 'location'])
+        ->name('customer.location');
+
+    Route::post('/pesan-antar/lokasi', [CustomerController::class, 'saveLocation'])
+        ->name('customer.location.save');
 
 });

@@ -3,8 +3,7 @@
 {{-- Leaflet CSS --}}
 <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-verdana">
     <div class="container mx-auto px-4 flex justify-between items-center py-2.5">
@@ -50,7 +49,9 @@
                 </p>
             </div>
         </div>
-
+        
+        <form action="{{ route('customer.location.save') }}" method="POST">
+            @csrf
         {{-- Map --}}
         <div
             id="delivery-map"
@@ -77,6 +78,7 @@
                 <input
                     type="text"
                     id="latitude"
+                    name="latitude"
                     readonly
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 text-sm">
             </div>
@@ -89,6 +91,7 @@
                 <input
                     type="text"
                     id="longitude"
+                    name="longitude"
                     readonly
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 text-sm">
             </div>
@@ -97,13 +100,14 @@
 
         {{-- Continue --}}
         <button
-            type="button"
+            type="submit"
             id="continue-button"
             class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition-colors">
             <i class="fa-solid fa-arrow-right mr-2"></i>
             {{ __('Lanjut') }}
         </button>
 
+        </form>
     </section>
 
 </main>
@@ -114,7 +118,7 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
         // Posisi awal peta
         const defaultLatitude = -5.3971;
@@ -127,8 +131,7 @@
 
         // OpenStreetMap
         L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; OpenStreetMap contributors'
             }
@@ -136,8 +139,7 @@
 
         // Marker
         let marker = L.marker(
-            [defaultLatitude, defaultLongitude],
-            {
+            [defaultLatitude, defaultLongitude], {
                 draggable: true
             }
         ).addTo(map);
@@ -160,7 +162,7 @@
         );
 
         // Ketika marker dipindahkan
-        marker.on('dragend', function (event) {
+        marker.on('dragend', function(event) {
 
             const position = event.target.getLatLng();
 
@@ -172,7 +174,7 @@
         });
 
         // Ketika peta diklik
-        map.on('click', function (event) {
+        map.on('click', function(event) {
 
             marker.setLatLng(event.latlng);
 
@@ -185,7 +187,7 @@
 
         // Gunakan lokasi perangkat
         document.getElementById('current-location')
-            .addEventListener('click', function () {
+            .addEventListener('click', function() {
 
                 if (!navigator.geolocation) {
                     alert('{{ __("Perangkat Anda tidak mendukung lokasi.") }}');
@@ -193,7 +195,7 @@
                 }
 
                 navigator.geolocation.getCurrentPosition(
-                    function (position) {
+                    function(position) {
 
                         const latitude = position.coords.latitude;
                         const longitude = position.coords.longitude;
@@ -214,7 +216,7 @@
                         );
 
                     },
-                    function () {
+                    function() {
 
                         alert('{{ __("Lokasi tidak dapat diperoleh. Pastikan izin lokasi telah diberikan.") }}');
 

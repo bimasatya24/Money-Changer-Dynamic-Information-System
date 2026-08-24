@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     public function ktp()
     {
-        $user = auth::user();
+        $user = Auth::user();
 
         return view('customer.ktp', compact('user'));
     }
@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'ktp_name' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik,' . auth::id()],
+            'nik' => ['required', 'digits:16', 'unique:users,nik,' . Auth::id()],
             'phone' => ['required', 'string', 'max:20'],
             'ktp_address' => ['required', 'string'],
             'rt_rw' => ['required', 'string', 'max:20'],
@@ -27,10 +27,35 @@ class CustomerController extends Controller
             'occupation' => ['required', 'string', 'max:100'],
         ]);
 
-        auth::user()->update($validated);
+        Auth::user()->update($validated);
 
         return redirect()
             ->route('customer.location')
             ->with('success', 'Data KTP berhasil disimpan.');
+    }
+
+    public function location()
+    {
+        return view('customer.location');
+    }
+
+    public function saveLocation(Request $request)
+    {
+        $validated = $request->validate([
+            'latitude' => ['required', 'numeric', 'between:-90,90'],
+            'longitude' => ['required', 'numeric', 'between:-180,180'],
+        ]);
+
+        session([
+            'delivery_location' => [
+                'latitude' => $validated['latitude'],
+                'longitude' => $validated['longitude'],
+            ],
+        ]);
+
+        return back()->with(
+            'success',
+            'Lokasi pengantaran berhasil dipilih.'
+        );
     }
 }
