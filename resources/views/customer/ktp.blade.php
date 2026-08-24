@@ -37,10 +37,6 @@
                 <h2 class="text-2xl font-bold text-gray-800">
                     {{ __('Lengkapi Data KTP') }}
                 </h2>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    {{ __('Data KTP wajib dilengkapi sebelum melakukan pemesanan.') }}
-                </p>
             </div>
         </div>
 

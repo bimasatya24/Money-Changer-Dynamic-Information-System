@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 
 class CustomerController extends Controller
 {
@@ -61,5 +62,40 @@ class CustomerController extends Controller
     public function order()
     {
         return view('customer.order');
+    }
+
+    public function saveOrder(Request $request)
+    {
+        $validated = $request->validate([
+            'transaction_type' => ['required', 'in:buy,sell'],
+            'currency' => ['required', 'string', 'max:10'],
+            'amount' => ['required', 'numeric', 'min:1'],
+        ]);
+
+        $deliveryLocation = session('delivery_location');
+
+        if (!$deliveryLocation) {
+            return redirect()
+                ->route('customer.location')
+                ->withErrors([
+                    'location' => 'Lokasi pengantaran belum dipilih.',
+                ]);
+        }
+
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'transaction_type' => $validated['transaction_type'],
+            'currency' => $validated['currency'],
+            'amount' => $validated['amount'],
+            'latitude' => $deliveryLocation['latitude'],
+            'longitude' => $deliveryLocation['longitude'],
+            'status' => 'pending',
+        ]);
+
+        session()->forget('delivery_location');
+
+        return redirect()
+            ->route('customer.order')
+            ->with('success', 'Pesanan berhasil disimpan.');
     }
 }

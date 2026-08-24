@@ -43,10 +43,6 @@
                 <h2 class="text-2xl font-bold text-gray-800">
                     {{ __('Lokasi Pengantaran') }}
                 </h2>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    {{ __('Tentukan lokasi pengantaran pada peta.') }}
-                </p>
             </div>
         </div>
         

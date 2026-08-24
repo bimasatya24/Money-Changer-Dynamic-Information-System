@@ -82,4 +82,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesan-antar/pesanan', [CustomerController::class, 'order'])
         ->name('customer.order');    
 
+    Route::post('/pesan-antar/pesanan', [CustomerController::class, 'saveOrder'])
+    ->name('customer.order.save');
 });

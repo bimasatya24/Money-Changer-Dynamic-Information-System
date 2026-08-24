@@ -39,15 +39,11 @@
                 <h2 class="text-2xl font-bold text-gray-800">
                     {{ __('Isi Pesanan') }}
                 </h2>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    {{ __('Tentukan valuta asing dan nominal yang ingin dipesan.') }}
-                </p>
             </div>
 
         </div>
 
-        <form action="#" method="POST">
+        <form action="{{ route('customer.order.save') }}" method="POST">
             @csrf
 
             {{-- Jenis Transaksi --}}
@@ -127,7 +123,20 @@
                     <option value="MYR">MYR - Malaysian Ringgit</option>
                     <option value="EUR">EUR - Euro</option>
                     <option value="SAR">SAR - Saudi Riyal</option>
-
+                    <option value="GBP">GBP - British Pound</option>
+                    <option value="CHF">CHF - Swiss Franc</option>
+                    <option value="AUD">AUD - Australian Dollar</option>
+                    <option value="KRW">KRW - South Korean Won</option>
+                    <option value="JPY">JPY - Japanese Yen</option>
+                    <option value="THB">THB - Thai Baht</option>
+                    <option value="CNY">CNY - Chinese Yuan</option>
+                    <option value="HKD">HKD - Hong Kong Dollar</option>
+                    <option value="BND">BND - Brunei Dollar</option>
+                    <option value="TWD">TWD - New Taiwan Dollar</option>
+                    <option value="PHP">PHP - Philippine Peso</option>
+                    <option value="TRY">TRY - Turkish Lira</option>
+                    <option value="VND">VND - Vietnamese Dong</option>
+                    <option value="AED">AED - UAE Dirham</option>
                 </select>
 
             </div>
