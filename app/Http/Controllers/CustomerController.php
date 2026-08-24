@@ -53,9 +53,13 @@ class CustomerController extends Controller
             ],
         ]);
 
-        return back()->with(
-            'success',
-            'Lokasi pengantaran berhasil dipilih.'
-        );
+        return redirect()
+            ->route('customer.order')
+            ->with('success', 'Lokasi pengantaran berhasil dipilih.');
+    }
+
+    public function order()
+    {
+        return view('customer.order');
     }
 }

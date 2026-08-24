@@ -85,5 +85,15 @@
     "Lanjut": "Continue",
     "Lokasi pengantaran": "Delivery location",
     "Perangkat Anda tidak mendukung lokasi.": "Your device does not support location services.",
-    "Lokasi tidak dapat diperoleh. Pastikan izin lokasi telah diberikan.": "Unable to obtain your location. Please make sure location permission has been granted."
+    "Lokasi tidak dapat diperoleh. Pastikan izin lokasi telah diberikan.": "Unable to obtain your location. Please make sure location permission has been granted.",
+    "Isi Pesanan": "Order Details",
+    "Tentukan valuta asing dan nominal yang ingin dipesan.": "Select the foreign currency and amount you want to order.",
+    "Jenis Transaksi": "Transaction Type",
+    "Beli Valuta": "Buy Currency",
+    "Jual Valuta": "Sell Currency",
+    "Mata Uang": "Currency",
+    "Nominal Valuta": "Currency Amount",
+    "Masukkan nominal valuta": "Enter the currency amount",
+    "Ringkasan Pesanan": "Order Summary",
+    "Nominal": "Amount"
 }

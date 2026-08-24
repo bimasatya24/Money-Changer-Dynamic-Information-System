@@ -79,4 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pesan-antar/lokasi', [CustomerController::class, 'saveLocation'])
         ->name('customer.location.save');
 
+    Route::get('/pesan-antar/pesanan', [CustomerController::class, 'order'])
+        ->name('customer.order');    
+
 });
