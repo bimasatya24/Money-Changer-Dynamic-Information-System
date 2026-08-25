@@ -92,5 +92,12 @@
     "Nominal Valuta": "Currency Amount",
     "Masukkan nominal valuta": "Enter the currency amount",
     "Ringkasan Pesanan": "Order Summary",
-    "Nominal": "Amount"
+    "Nominal": "Amount",
+    "Konfirmasi Pesanan": "Order Confirmation",
+    "Pastikan seluruh data pesanan dan lokasi pengantaran sudah benar sebelum melakukan konfirmasi.": "Please make sure all order details and the delivery location are correct before confirming.",
+    "Konfirmasi & Kirim Pesanan": "Confirm & Submit Order",
+    "Pesanan Berhasil": "Order Successful",
+    "Pesanan Berhasil Dikirim": "Order Successfully Submitted",
+    "Admin akan memproses pesanan Anda berdasarkan data yang telah dikirim.": "The admin will process your order based on the submitted information.",
+    "Kembali ke Beranda": "Back to Home"
 }

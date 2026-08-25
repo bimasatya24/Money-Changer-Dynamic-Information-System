@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Order;
 
 class CustomerController extends Controller
 {
@@ -19,7 +19,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'ktp_name' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik,' . Auth::id()],
+            'nik' => ['required', 'digits:16', 'unique:users,nik,'.Auth::id()],
             'phone' => ['required', 'string', 'max:20'],
             'ktp_address' => ['required', 'string'],
             'rt_rw' => ['required', 'string', 'max:20'],
@@ -74,7 +74,7 @@ class CustomerController extends Controller
 
         $deliveryLocation = session('delivery_location');
 
-        if (!$deliveryLocation) {
+        if (! $deliveryLocation) {
             return redirect()
                 ->route('customer.location')
                 ->withErrors([
@@ -82,20 +82,71 @@ class CustomerController extends Controller
                 ]);
         }
 
-        $order = Order::create([
+        session([
+            'order_data' => [
+                'transaction_type' => $validated['transaction_type'],
+                'currency' => $validated['currency'],
+                'amount' => $validated['amount'],
+            ],
+        ]);
+
+        return redirect()
+            ->route('customer.order.confirmation');
+    }
+
+    public function confirmation()
+    {
+        $orderData = session('order_data');
+        $deliveryLocation = session('delivery_location');
+
+        if (! $orderData || ! $deliveryLocation) {
+            return redirect()
+                ->route('customer.order')
+                ->withErrors([
+                    'order' => 'Data pesanan belum lengkap.',
+                ]);
+        }
+
+        return view('customer.confirmation', compact(
+            'orderData',
+            'deliveryLocation'
+        ));
+    }
+
+    public function confirmOrder()
+    {
+        $orderData = session('order_data');
+        $deliveryLocation = session('delivery_location');
+
+        if (! $orderData || ! $deliveryLocation) {
+            return redirect()
+                ->route('customer.order')
+                ->withErrors([
+                    'order' => 'Data pesanan belum lengkap.',
+                ]);
+        }
+
+        Order::create([
             'user_id' => Auth::id(),
-            'transaction_type' => $validated['transaction_type'],
-            'currency' => $validated['currency'],
-            'amount' => $validated['amount'],
+            'transaction_type' => $orderData['transaction_type'],
+            'currency' => $orderData['currency'],
+            'amount' => $orderData['amount'],
             'latitude' => $deliveryLocation['latitude'],
             'longitude' => $deliveryLocation['longitude'],
             'status' => 'pending',
         ]);
 
-        session()->forget('delivery_location');
+        session()->forget([
+            'order_data',
+            'delivery_location',
+        ]);
 
         return redirect()
-            ->route('customer.order')
-            ->with('success', 'Pesanan berhasil disimpan.');
+            ->route('customer.order.success');
+    }
+
+    public function success()
+    {
+        return view('customer.success');
     }
 }

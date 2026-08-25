@@ -83,5 +83,14 @@ Route::middleware('auth')->group(function () {
         ->name('customer.order');    
 
     Route::post('/pesan-antar/pesanan', [CustomerController::class, 'saveOrder'])
-    ->name('customer.order.save');
+        ->name('customer.order.save');
+
+    Route::get('/pesan-antar/konfirmasi', [CustomerController::class, 'confirmation'])
+        ->name('customer.order.confirmation');
+
+    Route::post('/pesan-antar/konfirmasi', [CustomerController::class, 'confirmOrder'])
+        ->name('customer.order.confirm');
+
+    Route::get('/pesan-antar/berhasil', [CustomerController::class, 'success'])
+    ->name('customer.order.success');    
 });
