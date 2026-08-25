@@ -80,6 +80,12 @@
                         placeholder="{{ __('Masukkan nama Anda') }}"
                         class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
+
+                @error('name')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
 
             {{-- Password --}}
@@ -95,6 +101,12 @@
                         placeholder="{{ __('Masukkan password Anda') }}"
                         class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
+
+                @error('password')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
 
             {{-- Tombol --}}

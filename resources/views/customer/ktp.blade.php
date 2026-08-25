@@ -41,13 +41,13 @@
         </div>
 
         @if ($errors->any())
-            <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
-                <ul class="list-disc list-inside space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+            <ul class="list-disc list-inside space-y-1">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <form action="{{ route('customer.ktp.save') }}" method="POST">
@@ -65,6 +65,12 @@
                         value="{{ old('ktp_name', $user->ktp_name) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    @error('ktp_name')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div>
@@ -79,6 +85,12 @@
                         inputmode="numeric"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    @error('nik')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div>
@@ -91,6 +103,12 @@
                         value="{{ old('phone', $user->phone) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    @error('phone')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div>
@@ -104,6 +122,12 @@
                         placeholder="Contoh: 001/002"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    @error('rt_rw')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div>
@@ -116,6 +140,12 @@
                         value="{{ old('kelurahan_desa', $user->kelurahan_desa) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    @error('kelurahan_desa')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div>
@@ -128,6 +158,12 @@
                         value="{{ old('kecamatan', $user->kecamatan) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    @error('kecamatan')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
 
                 <div class="md:col-span-2">
@@ -140,6 +176,12 @@
                         rows="3"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('ktp_address', $user->ktp_address) }}</textarea>
+
+                    @error('ktp_address')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror    
                 </div>
 
                 <div class="md:col-span-2">
@@ -152,6 +194,12 @@
                         value="{{ old('occupation', $user->occupation) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    @error('occupation')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                    @enderror    
                 </div>
 
             </div>
