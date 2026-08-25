@@ -15,7 +15,7 @@
                 {{-- Logo BSV --}}
                 <div class="flex items-center">
                     <img
-                        src="{{ asset('images\WhatsApp Image 2026-08-20 at 14.41.18.jpeg') }}"
+                        src="{{ asset('images\Logo-BSV.png') }}"
                         alt="Logo BSV"
                         class="h-14 w-auto object-contain">
                 </div>
@@ -45,7 +45,7 @@
                 {{-- Logo KUPVA Berizin --}}
                 <div class="flex items-center">
                     <img
-                        src="{{ asset('images\Logo.jpeg') }}"
+                        src="{{ asset('images\Logo-KUPVA.png') }}"
                         alt="Logo KUPVA Berizin"
                         class="h-14 w-auto object-contain">
                 </div>
