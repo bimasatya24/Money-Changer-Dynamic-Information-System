@@ -99,5 +99,18 @@
     "Pesanan Berhasil": "Order Successful",
     "Pesanan Berhasil Dikirim": "Order Successfully Submitted",
     "Admin akan memproses pesanan Anda berdasarkan data yang telah dikirim.": "The admin will process your order based on the submitted information.",
-    "Kembali ke Beranda": "Back to Home"
+    "Kembali ke Beranda": "Back to Home",
+    "Perubahan Kurs": "Exchange Rate Update",
+    "Terdapat": "There are",
+    "data kurs yang mengalami perubahan.": "exchange rate data changes.",
+     "Cara Pesan Antar": "How to Order Delivery",
+    "Ikuti beberapa langkah berikut untuk melakukan pemesanan layanan pesan antar.": "Follow these steps to place a delivery order.",
+    "Lengkapi Data": "Complete Your Information",
+    "Lengkapi data pelanggan yang diperlukan sebelum melanjutkan proses pemesanan.": "Complete the required customer information before continuing the ordering process.",
+    "Tentukan Lokasi": "Set Delivery Location",
+    "Tentukan lokasi pengantaran yang akan digunakan untuk proses pesan antar.": "Set the delivery location to be used for the delivery order.",
+    "Tentukan mata uang, nominal, dan data pesanan yang diperlukan.": "Select the currency, amount, and required order details.",
+    "Kirim Pesanan": "Submit Order",
+    "Periksa kembali data pesanan kemudian kirim pesanan untuk diproses.": "Review your order details and submit the order for processing.",
+    "Pesan Antar Sekarang": "Order Delivery Now"
 }

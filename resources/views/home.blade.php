@@ -3,24 +3,28 @@
 
 <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-verdana">
     <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-2.5">
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-1.5">
             <a href="#kalkulator-valas"
-                class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Kalkulator Konversi Valas') }}
             </a>
             <a href="#tabel-kurs-real-time"
-                class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Tabel Kurs Real-Time') }}
             </a>
             <a href="#company-profile"
-                class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Company Profile') }}
             </a>
             <a href="{{ route('pesan-antar') }}"
-                class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Pesan Antar') }}
             </a>
-            <span class="px-4 py-2 rounded-xl text-sm font-semibold opacity-75 cursor-not-allowed">
+            <a href="#cara-pesan-antar"
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
+                {{ __('Cara Pesan Antar') }}
+            </a>
+            <span class="px-3 py-2 rounded-xl text-xs font-semibold opacity-75 cursor-not-allowed">
                 {{ __('Kasir') }}
             </span>
         </div>
@@ -77,10 +81,10 @@
                             <select id="calcCurrency"
                                 class="w-full py-2.5 px-4 bg-gray-50 border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
                                 @foreach ($allUpload as $r)
-                                    <option value="{{ $r->MATA_UANG }}" data-beli="{{ $r->BELI }}"
-                                        data-jual="{{ $r->JUAL }}" data-pecahan="{{ $r->PECAHAN }}">
-                                        {{ $r->MATA_UANG }} ({{ $r->PECAHAN }})
-                                    </option>
+                                <option value="{{ $r->MATA_UANG }}" data-beli="{{ $r->BELI }}"
+                                    data-jual="{{ $r->JUAL }}" data-pecahan="{{ $r->PECAHAN }}">
+                                    {{ $r->MATA_UANG }} ({{ $r->PECAHAN }})
+                                </option>
                                 @endforeach
                             </select>
                         </div>
@@ -161,45 +165,45 @@
                     <tbody id="rateTableBody"
                         class="divide-y divide-gray-100 text-sm md:text-base font-medium text-gray-700">
                         @foreach ($allUpload as $r)
-                            @php
-                                $cleanId = preg_replace('/[^A-Za-z0-9]/', '', $r->MATA_UANG . '_' . $r->PECAHAN);
-                            @endphp
-                            <tr class="hover:bg-blue-50/60 transition-colors">
-                                <td class="py-3.5 px-4 text-left pl-6 font-bold text-blue-900 flex items-center gap-2">
-                                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                    <span
-                                        class="bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200 text-xs font-bold text-gray-800 tracking-wider">
-                                        {{ $r->MATA_UANG }}
-                                    </span>
-                                </td>
-                                <td class="py-3.5 px-4 font-semibold text-gray-600">
-                                    {{ $r->PECAHAN }}
-                                </td>
-                                <td class="py-3.5 px-4 font-bold text-emerald-600 bg-emerald-50/40">
-                                    {{ $r->BELI < 1000 && fmod($r->BELI, 1) != 0
+                        @php
+                        $cleanId = preg_replace('/[^A-Za-z0-9]/', '', $r->MATA_UANG . '_' . $r->PECAHAN);
+                        @endphp
+                        <tr class="hover:bg-blue-50/60 transition-colors">
+                            <td class="py-3.5 px-4 text-left pl-6 font-bold text-blue-900 flex items-center gap-2">
+                                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                <span
+                                    class="bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200 text-xs font-bold text-gray-800 tracking-wider">
+                                    {{ $r->MATA_UANG }}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4 font-semibold text-gray-600">
+                                {{ $r->PECAHAN }}
+                            </td>
+                            <td class="py-3.5 px-4 font-bold text-emerald-600 bg-emerald-50/40">
+                                {{ $r->BELI < 1000 && fmod($r->BELI, 1) != 0
                                         ? number_format($r->BELI, 2, ',', '.')
                                         : number_format($r->BELI, 0, ',', '.') }}
-                                </td>
-                                <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/40">
-                                    {{ $r->JUAL < 1000 && fmod($r->JUAL, 1) != 0
+                            </td>
+                            <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/40">
+                                {{ $r->JUAL < 1000 && fmod($r->JUAL, 1) != 0
                                         ? number_format($r->JUAL, 2, ',', '.')
                                         : number_format($r->JUAL, 0, ',', '.') }}
-                                </td>
-                                <td class="py-2 px-4 text-center">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <div class="w-28 h-9">
-                                            <canvas id="chart-{{ $cleanId }}"
-                                                class="w-full h-full sparkline-canvas"
-                                                data-base-rate="{{ $r->BELI }}"
-                                                data-currency="{{ $cleanId }}"></canvas>
-                                        </div>
-                                        <span id="badge-{{ $cleanId }}"
-                                            class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">
-                                            +0.00%
-                                        </span>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <div class="w-28 h-9">
+                                        <canvas id="chart-{{ $cleanId }}"
+                                            class="w-full h-full sparkline-canvas"
+                                            data-base-rate="{{ $r->BELI }}"
+                                            data-currency="{{ $cleanId }}"></canvas>
                                     </div>
-                                </td>
-                            </tr>
+                                    <span id="badge-{{ $cleanId }}"
+                                        class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">
+                                        +0.00%
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -365,6 +369,126 @@
     title="Scroll ke atas">
     <i class="fa-solid fa-arrow-up"></i>
 </button>
+
+<div id="rateNotification"
+    class="fixed top-5 right-5 z-100 hidden w-87.5 max-w-[calc(100vw-2rem)] bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden">
+    <div class="flex items-start gap-3 p-4">
+        <div
+            class="w-10 h-10 shrink-0 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+
+        <div class="flex-1 min-w-0">
+            <h3 id="rateNotificationTitle"
+                class="font-bold text-gray-800 text-sm">
+                {{ __('Perubahan Kurs') }}
+            </h3>
+
+            <p id="rateNotificationMessage"
+                class="text-xs text-gray-600 mt-1 leading-relaxed">
+            </p>
+        </div>
+
+        <button type="button"
+            onclick="hideRateNotification()"
+            class="text-gray-400 hover:text-gray-700 transition-colors">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+</div>
+
+<section id="cara-pesan-antar" class="mt-16 scroll-mt-20">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+
+        <div class="flex items-center gap-3 mb-6">
+            <div
+                class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                <i class="fa-solid fa-truck"></i>
+            </div>
+
+            <div>
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                    {{ __('Cara Pesan Antar') }}
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    {{ __('Ikuti beberapa langkah berikut untuk melakukan pemesanan layanan pesan antar.') }}
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            {{-- Langkah 1 --}}
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <span
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        1
+                    </span>
+                    <h3 class="font-bold text-gray-800">
+                        {{ __('Lengkapi Data') }}
+                    </h3>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {{ __('Lengkapi data pelanggan yang diperlukan sebelum melanjutkan proses pemesanan.') }}
+                </p>
+            </div>
+
+            {{-- Langkah 2 --}}
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <span
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        2
+                    </span>
+                    <h3 class="font-bold text-gray-800">
+                        {{ __('Tentukan Lokasi') }}
+                    </h3>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {{ __('Tentukan lokasi pengantaran yang akan digunakan untuk proses pesan antar.') }}
+                </p>
+            </div>
+
+            {{-- Langkah 3 --}}
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <span
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        3
+                    </span>
+                    <h3 class="font-bold text-gray-800">
+                        {{ __('Isi Pesanan') }}
+                    </h3>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {{ __('Tentukan mata uang, nominal, dan data pesanan yang diperlukan.') }}
+                </p>
+            </div>
+
+            {{-- Langkah 4 --}}
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <span
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        4
+                    </span>
+                    <h3 class="font-bold text-gray-800">
+                        {{ __('Kirim Pesanan') }}
+                    </h3>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    {{ __('Periksa kembali data pesanan kemudian kirim pesanan untuk diproses.') }}
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 <script>
     document.getElementById('searchInput').addEventListener('input', function() {
@@ -647,52 +771,219 @@
     calculateConversion();
 
     function fetchLiveRates() {
-        fetch('{{ route('api.rates') }}')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal mengambil data kurs');
-                }
+        let previousRates = null;
+        let notificationTimeout = null;
 
-                return response.json();
-            })
-            .then(data => {
-                const tbody = document.getElementById('displayTableBody');
-                if (!tbody) return;
+        function formatRate(value) {
+            const number = parseFloat(value) || 0;
 
-                tbody.innerHTML = '';
-
-                data.forEach((r, index) => {
-                    const bgColor = getBgColorClass(index);
-                    const formatBeli = formatNumber(r.BELI);
-                    const formatJual = formatNumber(r.JUAL);
-
-                    tbody.innerHTML += `
-                    <tr class="${bgColor} font-verdana text-[32px] font-bold transition-all duration-300">
-                        <td class="border border-slate-300 p-2 align-middle">${r.MATA_UANG}</td>
-                        <td class="border border-slate-300 p-2 align-middle">${r.PECAHAN}</td>
-                        <td class="border border-slate-300 p-2 align-middle">${formatBeli}</td>
-                        <td class="border border-slate-300 p-2 align-middle">${formatJual}</td>
-                    </tr>
-                `;
+            return number < 1000 && number % 1 !== 0 ?
+                number.toLocaleString('id-ID', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) :
+                number.toLocaleString('id-ID', {
+                    maximumFractionDigits: 0
                 });
+        }
 
-                // Waktu halaman menerima data terbaru
-                const now = new Date();
+        function showRateNotification(changes) {
+            const notification = document.getElementById('rateNotification');
+            const title = document.getElementById('rateNotificationTitle');
+            const message = document.getElementById('rateNotificationMessage');
 
-                const options = {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                };
+            if (!notification || !changes.length) return;
 
-                document.getElementById('lastUpdatedText').innerText =
-                    now.toLocaleDateString('id-ID', options).replace('.', ':');
-            })
-            .catch(err => {
-                console.error('Error fetching live rates:', err);
+            title.innerText = "{{ __('Perubahan Kurs') }}";
+
+            if (changes.length === 1) {
+                const change = changes[0];
+
+                message.innerHTML = `
+                <b>${change.currency}</b> (${change.pecahan})<br>
+                ${change.beliChanged
+                    ? `Beli: Rp ${formatRate(change.oldBeli)} → <b>Rp ${formatRate(change.newBeli)}</b><br>`
+                    : ''
+                }
+                ${change.jualChanged
+                    ? `Jual: Rp ${formatRate(change.oldJual)} → <b>Rp ${formatRate(change.newJual)}</b>`
+                    : ''
+                }
+            `;
+            } else {
+                message.innerHTML =
+                    `{{ __('Terdapat') }} <b>${changes.length}</b> {{ __('data kurs yang mengalami perubahan.') }}`;
+            }
+
+            notification.classList.remove('hidden');
+
+            clearTimeout(notificationTimeout);
+
+            notificationTimeout = setTimeout(() => {
+                hideRateNotification();
+            }, 7000);
+        }
+
+        function hideRateNotification() {
+            const notification = document.getElementById('rateNotification');
+
+            if (notification) {
+                notification.classList.add('hidden');
+            }
+        }
+
+        function updateRateTable(data) {
+            const tbody = document.getElementById('rateTableBody');
+
+            if (!tbody) return;
+
+            const rows = tbody.querySelectorAll('tr');
+
+            data.forEach(r => {
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+
+                    if (cells.length < 4) return;
+
+                    const currency = cells[0].innerText.trim();
+                    const denomination = cells[1].innerText.trim();
+
+                    const cleanCurrency = currency
+                        .replace(/\s+/g, ' ')
+                        .trim();
+
+                    if (
+                        cleanCurrency.includes(r.MATA_UANG) &&
+                        denomination === String(r.PECAHAN)
+                    ) {
+                        cells[2].innerText = formatRate(r.BELI);
+                        cells[3].innerText = formatRate(r.JUAL);
+                    }
+                });
             });
+        }
+
+        function detectRateChanges(data) {
+            if (!previousRates) {
+                previousRates = data.map(r => ({
+                    MATA_UANG: r.MATA_UANG,
+                    PECAHAN: r.PECAHAN,
+                    BELI: parseFloat(r.BELI),
+                    JUAL: parseFloat(r.JUAL)
+                }));
+
+                return [];
+            }
+
+            const changes = [];
+
+            data.forEach(current => {
+                const old = previousRates.find(item =>
+                    item.MATA_UANG === current.MATA_UANG &&
+                    String(item.PECAHAN) === String(current.PECAHAN)
+                );
+
+                if (!old) return;
+
+                const newBeli = parseFloat(current.BELI);
+                const newJual = parseFloat(current.JUAL);
+
+                const beliChanged = old.BELI !== newBeli;
+                const jualChanged = old.JUAL !== newJual;
+
+                if (beliChanged || jualChanged) {
+                    changes.push({
+                        currency: current.MATA_UANG,
+                        pecahan: current.PECAHAN,
+                        oldBeli: old.BELI,
+                        newBeli: newBeli,
+                        oldJual: old.JUAL,
+                        newJual: newJual,
+                        beliChanged: beliChanged,
+                        jualChanged: jualChanged
+                    });
+                }
+            });
+
+            previousRates = data.map(r => ({
+                MATA_UANG: r.MATA_UANG,
+                PECAHAN: r.PECAHAN,
+                BELI: parseFloat(r.BELI),
+                JUAL: parseFloat(r.JUAL)
+            }));
+
+            return changes;
+        }
+
+        function fetchLiveRates() {
+            fetch('{{ route('api.rates') }}')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal mengambil data kurs');
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+                    const changes = detectRateChanges(data);
+
+                    // Perbarui tabel kurs
+                    updateRateTable(data);
+
+                    // Tampilkan popup hanya jika ada perubahan
+                    if (changes.length > 0) {
+                        showRateNotification(changes);
+                    }
+
+                    // Update kalkulator dengan data terbaru
+                    const select = document.getElementById('calcCurrency');
+
+                    if (select) {
+                        const selectedCurrency = select.value;
+
+                        data.forEach(r => {
+                            const option = Array.from(select.options).find(option =>
+                                option.value === r.MATA_UANG &&
+                                option.getAttribute('data-pecahan') === String(r.PECAHAN)
+                            );
+
+                            if (option) {
+                                option.setAttribute('data-beli', r.BELI);
+                                option.setAttribute('data-jual', r.JUAL);
+                            }
+                        });
+
+                        calculateConversion();
+
+                        select.value = selectedCurrency;
+                    }
+
+                    // Simpan waktu pembaruan
+                    const now = new Date();
+
+                    const options = {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    };
+
+                    const lastUpdated = document.getElementById('lastUpdatedText');
+
+                    if (lastUpdated) {
+                        lastUpdated.innerText =
+                            now.toLocaleDateString('id-ID', options).replace('.', ':');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching live rates:', err);
+                });
+        }
+
+        fetchLiveRates();
+
+        setInterval(fetchLiveRates, 15000);
     }
 
     // Ambil data ketika halaman pertama kali dibuka
