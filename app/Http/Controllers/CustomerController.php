@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'ktp_name' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik,'.Auth::id()],
+            'nik' => ['required', 'digits:16', 'unique:users,nik,' . Auth::id()],
             'phone' => ['required', 'string', 'max:20'],
             'ktp_address' => ['required', 'string'],
             'rt_rw' => ['required', 'string', 'max:20'],
@@ -113,7 +114,7 @@ class CustomerController extends Controller
         ));
     }
 
-    public function confirmOrder()
+    public function confirmOrder(WhatsAppService $whatsappService)
     {
         $orderData = session('order_data');
         $deliveryLocation = session('delivery_location');
@@ -126,7 +127,7 @@ class CustomerController extends Controller
                 ]);
         }
 
-        Order::create([
+        $order = Order::create([
             'user_id' => Auth::id(),
             'transaction_type' => $orderData['transaction_type'],
             'currency' => $orderData['currency'],
@@ -135,6 +136,10 @@ class CustomerController extends Controller
             'longitude' => $deliveryLocation['longitude'],
             'status' => 'pending',
         ]);
+
+        $order->load('user');
+
+        $whatsappService->sendOrderNotification($order);
 
         session()->forget([
             'order_data',
