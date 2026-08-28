@@ -35,10 +35,25 @@
 
             <div>
                 <h2 class="text-2xl font-bold text-gray-800">
-                    {{ __('Lengkapi Data KTP') }}
+                    {{ __('Data Identitas KTP Pelanggan') }}
                 </h2>
+                <p class="text-xs text-gray-500 mt-1">
+                    {{ __('Data identitas Anda disimpan secara aman dan otomatis diingat untuk setiap pemesanan berikutnya.') }}
+                </p>
             </div>
         </div>
+
+        @if (!empty($user->nik) && !empty($user->ktp_name))
+        <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+                <span>{{ __('Data KTP Anda sudah tersimpan lengkap.') }}</span>
+            </div>
+            <a href="{{ route('customer.order') }}" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+                <i class="fa-solid fa-arrow-right mr-1"></i> {{ __('Langsung Buat Pesanan') }}
+            </a>
+        </div>
+        @endif
 
         @if ($errors->any())
         <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">

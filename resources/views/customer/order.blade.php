@@ -5,7 +5,7 @@
 
         <div class="flex items-center space-x-2">
             <span class="px-4 py-2 rounded-xl text-sm font-semibold bg-blue-500">
-                {{ __('Isi Pesanan') }}
+                {{ __('Pemesanan Valas') }}
             </span>
         </div>
 
@@ -24,260 +24,326 @@
     </div>
 </nav>
 
-<main class="container mx-auto px-4 py-8 max-w-3xl font-verdana">
+<main class="container mx-auto px-4 py-8 max-w-4xl font-verdana">
 
+    {{-- Banner Data Profil Pelanggan (Ingat Data Diri) --}}
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 font-medium">{{ __('Pemesan Terdaftar:') }}</p>
+                <h4 class="font-bold text-gray-800 text-sm md:text-base">{{ $user->ktp_name }} <span class="text-xs font-normal text-gray-500">({{ $user->phone }})</span></h4>
+                <p class="text-[11px] text-gray-500">NIK: {{ $user->nik }} | {{ $user->kelurahan_desa }}, {{ $user->kecamatan }}</p>
+            </div>
+        </div>
+        <a href="{{ route('customer.ktp', ['edit' => 1]) }}" class="px-3.5 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+            <i class="fa-solid fa-pen-to-square mr-1"></i> {{ __('Ubah Data Diri') }}
+        </a>
+    </div>
+
+    {{-- Card Lokasi Pengambilan: Kantor Pusat Tanjung Karang --}}
+    <div class="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl text-white p-6 shadow-md mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold mb-2">
+                    <i class="fa-solid fa-building-flag"></i> {{ __('Khusus Ambil di Kantor Pusat') }}
+                </div>
+                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight">{{ __('Kantor Tanjung Karang (Pusat No. 1)') }}</h2>
+                <p class="text-xs md:text-sm text-blue-100 mt-1">
+                    Jl. Raden Intan No. 71, Tanjung Karang, Bandar Lampung
+                </p>
+                <div class="mt-3 flex flex-wrap gap-3 text-xs text-blue-200">
+                    <span><i class="fa-solid fa-clock mr-1"></i> <b>{{ __('Senin - Jum\'at') }}:</b> 08.45 - 17.00 | <b>{{ __('Sabtu') }}:</b> 08.45 - 14.30</span>
+                    <span><i class="fa-solid fa-phone mr-1"></i> +62 821-6311-0597</span>
+                </div>
+            </div>
+            <div class="hidden lg:block text-right">
+                <span class="inline-block px-4 py-2 bg-emerald-500/90 text-white rounded-xl text-xs font-bold shadow">
+                    <i class="fa-solid fa-handshake mr-1"></i> {{ __('Siap Diambil di Lokasi') }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    {{-- Form Pemesanan Multi-Item --}}
     <section class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
 
-        {{-- Header --}}
-        <div class="flex items-center gap-4 mb-6">
-
-            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
-                <i class="fa-solid fa-money-bill-transfer"></i>
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">
+                        {{ __('Rincian Mata Uang Pesanan') }}
+                    </h2>
+                    <p class="text-xs text-gray-500">{{ __('Anda dapat memesan lebih dari 1 mata uang dalam 1 formulir pesanan.') }}</p>
+                </div>
             </div>
-
-            <div>
-                <h2 class="text-2xl font-bold text-gray-800">
-                    {{ __('Isi Pesanan') }}
-                </h2>
-            </div>
-
         </div>
 
-        <form action="{{ route('customer.order.save') }}" method="POST">
+        @if ($errors->any())
+        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+            <ul class="list-disc list-inside space-y-1">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <form action="{{ route('customer.order.save') }}" method="POST" id="orderForm">
             @csrf
 
-            {{-- Jenis Transaksi --}}
-            <div class="mb-5">
+            {{-- Container Baris Item Valas --}}
+            <div id="itemsContainer" class="space-y-4 mb-6">
+                {{-- Item 1 (Default) --}}
+                <div class="item-row bg-gray-50 border border-gray-200 p-4 md:p-5 rounded-2xl relative transition-all" data-index="0">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-blue-700 bg-blue-100/70 px-2.5 py-1 rounded-lg item-number-badge">
+                            {{ __('Item #1') }}
+                        </span>
+                        <button type="button" class="btn-delete-item text-rose-500 hover:text-rose-700 text-xs font-bold px-2 py-1 rounded-lg hover:bg-rose-50 transition-colors hidden" onclick="deleteItem(this)">
+                            <i class="fa-solid fa-trash-can mr-1"></i> {{ __('Hapus') }}
+                        </button>
+                    </div>
 
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
-                    {{ __('Jenis Transaksi') }}
-                </label>
-
-                <div class="grid grid-cols-2 gap-3">
-
-                    <label class="cursor-pointer">
-                        <input
-                            type="radio"
-                            name="transaction_type"
-                            value="buy"
-                            class="peer sr-only"
-                            checked>
-
-                        <div class="border border-gray-300 rounded-xl p-4 text-center
-                                    peer-checked:border-blue-600
-                                    peer-checked:bg-blue-50
-                                    peer-checked:text-blue-700
-                                    transition-all">
-
-                            <i class="fa-solid fa-arrow-down mr-2"></i>
-                            {{ __('Beli Valuta') }}
-
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                        {{-- Jenis Transaksi --}}
+                        <div class="md:col-span-4">
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Jenis Transaksi') }}
+                            </label>
+                            <select name="items[0][transaction_type]" class="item-type w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" onchange="updateLiveSummary()">
+                                <option value="buy" selected>{{ __('Saya ingin beli') }}</option>
+                                <option value="sell">{{ __('Saya ingin jual') }}</option>
+                            </select>
                         </div>
-                    </label>
 
-                    <label class="cursor-pointer">
-                        <input
-                            type="radio"
-                            name="transaction_type"
-                            value="sell"
-                            class="peer sr-only">
-
-                        <div class="border border-gray-300 rounded-xl p-4 text-center
-                                    peer-checked:border-blue-600
-                                    peer-checked:bg-blue-50
-                                    peer-checked:text-blue-700
-                                    transition-all">
-
-                            <i class="fa-solid fa-arrow-up mr-2"></i>
-                            {{ __('Jual Valuta') }}
-
+                        {{-- Mata Uang --}}
+                        <div class="md:col-span-4">
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Mata Uang') }}
+                            </label>
+                            <select name="items[0][currency]" required class="item-currency w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" onchange="updateLiveSummary()">
+                                <option value="">{{ __('-- Pilih Mata Uang --') }}</option>
+                                @if(isset($currencies) && $currencies->count() > 0)
+                                    @foreach($currencies as $c)
+                                        <option value="{{ $c->MATA_UANG }}" {{ $loop->first ? 'selected' : '' }}>
+                                            {{ $c->MATA_UANG }} ({{ $c->PECAHAN }})
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="USD" selected>USD - US Dollar</option>
+                                    <option value="SGD">SGD - Singapore Dollar</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="MYR">MYR - Malaysian Ringgit</option>
+                                    <option value="SAR">SAR - Saudi Riyal</option>
+                                    <option value="JPY">JPY - Japanese Yen</option>
+                                    <option value="AUD">AUD - Australian Dollar</option>
+                                    <option value="CNY">CNY - Chinese Yuan</option>
+                                @endif
+                            </select>
                         </div>
-                    </label>
 
+                        {{-- Nominal --}}
+                        <div class="md:col-span-4">
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                                {{ __('Nominal Valuta') }}
+                            </label>
+                            <input type="number" name="items[0][amount]" value="100" min="1" step="any" required placeholder="Contoh: 100" class="item-amount w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-bold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateLiveSummary()">
+                        </div>
+                    </div>
                 </div>
-
             </div>
 
-            {{-- Mata Uang --}}
-            <div class="mb-5">
+            {{-- Tombol Tambah Item --}}
+            <div class="mb-6">
+                <button type="button" onclick="addNewItemRow()" class="flex items-center justify-center gap-2 w-full py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border-2 border-dashed border-blue-300 rounded-xl text-sm font-bold transition-all cursor-pointer hover:shadow-sm">
+                    <i class="fa-solid fa-circle-plus text-base"></i>
+                    <span>{{ __('+ Tambah Mata Uang / Item Lain') }}</span>
+                </button>
+            </div>
 
-                <label
-                    for="currency"
-                    class="block text-sm font-semibold text-gray-700 mb-2">
-                    {{ __('Mata Uang') }}
+            {{-- Catatan Tambahan --}}
+            <div class="mb-6">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                    {{ __('Catatan Tambahan (Opsional)') }}
                 </label>
-
-                <select
-                    id="currency"
-                    name="currency"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-sm
-                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-
-                    <option value="">
-                        {{ __('Pilih Mata Uang') }}
-                    </option>
-
-                    <option value="USD">USD - US Dollar</option>
-                    <option value="SGD">SGD - Singapore Dollar</option>
-                    <option value="MYR">MYR - Malaysian Ringgit</option>
-                    <option value="EUR">EUR - Euro</option>
-                    <option value="SAR">SAR - Saudi Riyal</option>
-                    <option value="GBP">GBP - British Pound</option>
-                    <option value="CHF">CHF - Swiss Franc</option>
-                    <option value="AUD">AUD - Australian Dollar</option>
-                    <option value="KRW">KRW - South Korean Won</option>
-                    <option value="JPY">JPY - Japanese Yen</option>
-                    <option value="THB">THB - Thai Baht</option>
-                    <option value="CNY">CNY - Chinese Yuan</option>
-                    <option value="HKD">HKD - Hong Kong Dollar</option>
-                    <option value="BND">BND - Brunei Dollar</option>
-                    <option value="TWD">TWD - New Taiwan Dollar</option>
-                    <option value="PHP">PHP - Philippine Peso</option>
-                    <option value="TRY">TRY - Turkish Lira</option>
-                    <option value="VND">VND - Vietnamese Dong</option>
-                    <option value="AED">AED - UAE Dirham</option>
-                </select>
-
+                <textarea name="notes" rows="2" placeholder="{{ __('Misal: Perkiraan tiba jam 10 pagi, butuh pecahan baru...') }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
             </div>
 
-            {{-- Nominal --}}
-            <div class="mb-5">
-
-                <label
-                    for="amount"
-                    class="block text-sm font-semibold text-gray-700 mb-2">
-                    {{ __('Nominal Valuta') }}
-                </label>
-
-                <div class="relative">
-
-                    <i class="fa-solid fa-money-bill-wave absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-
-                    <input
-                        type="number"
-                        id="amount"
-                        name="amount"
-                        min="1"
-                        step="any"
-                        required
-                        placeholder="{{ __('Masukkan nominal valuta') }}"
-                        class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm
-                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-
+            {{-- Ringkasan Pesanan Live --}}
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 mb-6">
+                <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-200">
+                    <h3 class="font-bold text-gray-800 text-sm">
+                        <i class="fa-solid fa-receipt text-blue-600 mr-1.5"></i> {{ __('Ringkasan Pemesanan') }}
+                    </h3>
+                    <span id="summaryTotalItems" class="text-xs font-bold bg-blue-600 text-white px-2.5 py-0.5 rounded-full">
+                        1 Item
+                    </span>
                 </div>
-
-            </div>
-
-            {{-- Ringkasan --}}
-            <div class="mt-6 p-5 rounded-xl bg-gray-50 border border-gray-200">
-
-                <h3 class="font-bold text-gray-800 mb-4">
-                    {{ __('Ringkasan Pesanan') }}
-                </h3>
-
-                <div class="space-y-3 text-sm">
-
-                    <div class="flex justify-between gap-4">
-                        <span class="text-gray-500">
-                            {{ __('Jenis Transaksi') }}
-                        </span>
-
-                        <span id="summary-type" class="font-semibold text-gray-800">
-                            {{ __('Beli Valuta') }}
-                        </span>
-                    </div>
-
-                    <div class="flex justify-between gap-4">
-                        <span class="text-gray-500">
-                            {{ __('Mata Uang') }}
-                        </span>
-
-                        <span id="summary-currency" class="font-semibold text-gray-800">
-                            -
-                        </span>
-                    </div>
-
-                    <div class="flex justify-between gap-4">
-                        <span class="text-gray-500">
-                            {{ __('Nominal') }}
-                        </span>
-
-                        <span id="summary-amount" class="font-semibold text-gray-800">
-                            -
-                        </span>
-                    </div>
-
+                <div id="summaryList" class="space-y-2 text-xs md:text-sm">
+                    <!-- Dinamis terisi via JS -->
                 </div>
-
+                <div class="mt-3 pt-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500 font-medium">
+                    <span><i class="fa-solid fa-location-dot text-red-500 mr-1"></i> {{ __('Lokasi Ambil:') }}</span>
+                    <span class="font-bold text-gray-800">{{ __('Kantor Tanjung Karang (No. 1)') }}</span>
+                </div>
             </div>
 
-            {{-- Lanjut --}}
-            <button
-                type="submit"
-                class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition-colors">
-
-                <i class="fa-solid fa-arrow-right mr-2"></i>
-                {{ __('Lanjut') }}
-
+            {{-- Tombol Lanjut --}}
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold text-base shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2">
+                <span>{{ __('Lanjut ke Konfirmasi Pesanan') }}</span>
+                <i class="fa-solid fa-arrow-right"></i>
             </button>
-
         </form>
 
     </section>
 
 </main>
 
+{{-- Template Options Valas untuk Dynamic Row --}}
+<template id="currencyOptionsTemplate">
+    <option value="">{{ __('-- Pilih Mata Uang --') }}</option>
+    @if(isset($currencies) && $currencies->count() > 0)
+        @foreach($currencies as $c)
+            <option value="{{ $c->MATA_UANG }}">
+                {{ $c->MATA_UANG }} ({{ $c->PECAHAN }})
+            </option>
+        @endforeach
+    @else
+        <option value="USD">USD - US Dollar</option>
+        <option value="SGD">SGD - Singapore Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="MYR">MYR - Malaysian Ringgit</option>
+        <option value="SAR">SAR - Saudi Riyal</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+        <option value="AUD">AUD - Australian Dollar</option>
+        <option value="CNY">CNY - Chinese Yuan</option>
+    @endif
+</template>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    let itemCount = 1;
 
-        const currency = document.getElementById('currency');
-        const amount = document.getElementById('amount');
+    function addNewItemRow() {
+        const container = document.getElementById('itemsContainer');
+        const index = itemCount;
+        itemCount++;
 
-        const summaryCurrency = document.getElementById('summary-currency');
-        const summaryAmount = document.getElementById('summary-amount');
-        const summaryType = document.getElementById('summary-type');
+        const optionsHtml = document.getElementById('currencyOptionsTemplate').innerHTML;
 
-        function updateSummary() {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'item-row bg-gray-50 border border-gray-200 p-4 md:p-5 rounded-2xl relative transition-all animate-fadeIn';
+        rowDiv.setAttribute('data-index', index);
 
-            const selectedCurrency =
-                currency.options[currency.selectedIndex]?.text || '-';
+        rowDiv.innerHTML = `
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-blue-700 bg-blue-100/70 px-2.5 py-1 rounded-lg item-number-badge">
+                    {{ __('Item') }} #${container.children.length + 1}
+                </span>
+                <button type="button" class="btn-delete-item text-rose-500 hover:text-rose-700 text-xs font-bold px-2 py-1 rounded-lg hover:bg-rose-50 transition-colors" onclick="deleteItem(this)">
+                    <i class="fa-solid fa-trash-can mr-1"></i> {{ __('Hapus') }}
+                </button>
+            </div>
 
-            const selectedAmount =
-                amount.value ? amount.value : '-';
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                        {{ __('Jenis Transaksi') }}
+                    </label>
+                    <select name="items[${index}][transaction_type]" class="item-type w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" onchange="updateLiveSummary()">
+                        <option value="buy" selected>{{ __('Saya ingin beli') }}</option>
+                        <option value="sell">{{ __('Saya ingin jual') }}</option>
+                    </select>
+                </div>
 
-            const selectedType =
-                document.querySelector(
-                    'input[name="transaction_type"]:checked'
-                );
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                        {{ __('Mata Uang') }}
+                    </label>
+                    <select name="items[${index}][currency]" required class="item-currency w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-semibold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" onchange="updateLiveSummary()">
+                        ${optionsHtml}
+                    </select>
+                </div>
 
-            if (currency.value) {
-                summaryCurrency.textContent = selectedCurrency;
-            } else {
-                summaryCurrency.textContent = '-';
-            }
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                        {{ __('Nominal Valuta') }}
+                    </label>
+                    <input type="number" name="items[${index}][amount]" value="100" min="1" step="any" required placeholder="Contoh: 100" class="item-amount w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-sm font-bold text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateLiveSummary()">
+                </div>
+            </div>
+        `;
 
-            summaryAmount.textContent = selectedAmount;
+        container.appendChild(rowDiv);
+        refreshItemBadges();
+        updateLiveSummary();
+    }
 
-            if (selectedType) {
-                summaryType.textContent =
-                    selectedType.value === 'buy'
-                        ? '{{ __("Beli Valuta") }}'
-                        : '{{ __("Jual Valuta") }}';
-            }
+    function deleteItem(btn) {
+        const row = btn.closest('.item-row');
+        const container = document.getElementById('itemsContainer');
+        if (container.children.length > 1) {
+            row.remove();
+            refreshItemBadges();
+            updateLiveSummary();
         }
+    }
 
-        currency.addEventListener('change', updateSummary);
-        amount.addEventListener('input', updateSummary);
+    function refreshItemBadges() {
+        const rows = document.querySelectorAll('.item-row');
+        rows.forEach((row, i) => {
+            const badge = row.querySelector('.item-number-badge');
+            if (badge) badge.innerText = `{{ __('Item') }} #${i + 1}`;
+            const delBtn = row.querySelector('.btn-delete-item');
+            if (delBtn) {
+                if (rows.length > 1) {
+                    delBtn.classList.remove('hidden');
+                } else {
+                    delBtn.classList.add('hidden');
+                }
+            }
+        });
+    }
 
-        document
-            .querySelectorAll('input[name="transaction_type"]')
-            .forEach(function (radio) {
-                radio.addEventListener('change', updateSummary);
-            });
+    function updateLiveSummary() {
+        const rows = document.querySelectorAll('.item-row');
+        const summaryList = document.getElementById('summaryList');
+        const summaryTotalItems = document.getElementById('summaryTotalItems');
+        
+        summaryTotalItems.innerText = `${rows.length} Item`;
+        summaryList.innerHTML = '';
 
-        updateSummary();
+        rows.forEach((row, i) => {
+            const type = row.querySelector('.item-type').value;
+            const currency = row.querySelector('.item-currency').value || '-';
+            const amount = parseFloat(row.querySelector('.item-amount').value) || 0;
+            const formattedAmount = amount.toLocaleString('id-ID');
 
+            const isBuy = type === 'buy';
+            const badgeClass = isBuy ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700';
+            const typeLabel = isBuy ? '{{ __('BELI') }}' : '{{ __('JUAL') }}';
+
+            summaryList.innerHTML += `
+                <div class="flex items-center justify-between py-1 border-b border-gray-100 last:border-0">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-500">#${i + 1}</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${badgeClass}">${typeLabel}</span>
+                        <span class="font-bold text-gray-800">${currency}</span>
+                    </div>
+                    <span class="font-bold text-gray-800">${formattedAmount} ${currency}</span>
+                </div>
+            `;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        refreshItemBadges();
+        updateLiveSummary();
     });
 </script>
 

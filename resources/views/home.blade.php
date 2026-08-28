@@ -16,13 +16,9 @@
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Company Profile') }}
             </a>
-            <a href="#cara-pesan-antar"
-                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
-                {{ __('Cara Pesan Antar') }}
-            </a>
             <a href="{{ route('pesan-antar') }}"
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
-                {{ __('Pesan Antar') }}
+                {{ __('Pemesanan Valas') }}
             </a>
             <span class="px-3 py-2 rounded-xl text-xs font-semibold opacity-75 cursor-not-allowed">
                 {{ __('Kasir') }}

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uploads', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->string('MATA_UANG');
-            $table->string('PECAHAN');
-            $table->decimal('BSV BELI', 10, 2);
-            $table->decimal('BSV JUAL', 10, 2);
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->string('transaction_type', 10); // 'buy' or 'sell'
+            $table->string('currency', 10);
+            $table->decimal('amount', 18, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('order_items');
     }
 };

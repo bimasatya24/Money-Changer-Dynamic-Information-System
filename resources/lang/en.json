@@ -111,6 +111,19 @@
     "Tentukan lokasi pengantaran yang akan digunakan untuk proses pesan antar.": "Set the delivery location to be used for the delivery order.",
     "Tentukan mata uang, nominal, dan data pesanan yang diperlukan.": "Select the currency, amount, and required order details.",
     "Kirim Pesanan": "Submit Order",
-    "Periksa kembali data pesanan kemudian kirim pesanan untuk diproses.": "Review your order details and submit the order for processing.",
-    "Pesan Antar Sekarang": "Order Delivery Now"
+    "Pesan Antar Sekarang": "Order Delivery Now",
+    "Pemesanan Valas": "Currency Booking & Pickup",
+    "Pemesanan Valas (Ambil di Kantor Tanjung Karang)": "Currency Booking (Pickup at Tanjung Karang Main Branch)",
+    "Khusus Ambil di Kantor Pusat": "Exclusive In-Person Pickup at Main Branch",
+    "Kantor Tanjung Karang (Pusat No. 1)": "Tanjung Karang Branch (Main Office No. 1)",
+    "Siap Diambil di Lokasi": "Ready for In-Person Pickup",
+    "Rincian Mata Uang Pesanan": "Currency Order Items",
+    "Anda dapat memesan lebih dari 1 mata uang dalam 1 formulir pesanan.": "You can order multiple currencies in a single order form.",
+    "+ Tambah Mata Uang / Item Lain": "+ Add Another Currency / Item",
+    "Ubah Data Diri": "Edit Profile Details",
+    "Pemesan Terdaftar:": "Registered Customer:",
+    "Saya ingin beli": "I want to buy",
+    "Saya ingin jual": "I want to sell",
+    "Daftar Mata Uang yang Dipesan": "Ordered Currency List",
+    "Ubah Pesanan": "Edit Order"
 }

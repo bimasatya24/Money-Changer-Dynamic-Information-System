@@ -80,47 +80,40 @@ class WhatsAppService
             return false;
         }
 
-        $message = "🔔 *Pesanan Baru Money Changer*\n\n";
+        $message = "🔔 *Pesanan Baru Money Changer (Ambil di Lokasi)*\n\n";
 
         $message .= "📋 *Informasi Pesanan*\n";
-        $message .= "Kode Pesanan: {$order->id}\n";
+        $message .= "Kode Pesanan: #{$order->id}\n";
+        $message .= "Status: " . ucfirst($order->status ?? 'pending') . "\n";
+        $message .= "🏢 *Lokasi Pengambilan*: Kantor Tanjung Karang (No. 1)\n\n";
 
-        if ($order->currency) {
-            $message .= "Mata Uang: {$order->currency}\n";
+        $message .= "💱 *Daftar Item Valuta:*\n";
+        if ($order->items && $order->items->count() > 0) {
+            foreach ($order->items as $index => $item) {
+                $type = $item->transaction_type === 'buy' ? 'Beli' : 'Jual';
+                $amountFormatted = number_format($item->amount, 2, ',', '.');
+                $num = $index + 1;
+                $message .= "{$num}. [{$type}] {$amountFormatted} {$item->currency}\n";
+            }
+        } elseif ($order->currency && $order->amount) {
+            $type = $order->transaction_type === 'buy' ? 'Beli' : 'Jual';
+            $amountFormatted = number_format($order->amount, 2, ',', '.');
+            $message .= "1. [{$type}] {$amountFormatted} {$order->currency}\n";
         }
 
-        if ($order->amount) {
-            $message .= "Nominal: {$order->amount}\n";
+        if (! empty($order->notes)) {
+            $message .= "Catatan: {$order->notes}\n";
         }
 
-        if ($order->transaction_type) {
-            $message .= "Jenis Transaksi: {$order->transaction_type}\n";
-        }
-
-        if ($order->status) {
-            $message .= "Status: {$order->status}\n";
-        }
-
-        $message .= "\n";
-        $message .= "👤 *Data Pelanggan*\n";
-
+        $message .= "\n👤 *Data Pelanggan:*\n";
         if ($order->user) {
             $message .= "Nama: " . ($order->user->ktp_name ?? '-') . "\n";
             $message .= "No. HP: " . ($order->user->phone ?? '-') . "\n";
             $message .= "NIK: " . ($order->user->nik ?? '-') . "\n";
+            $message .= "Alamat KTP: " . ($order->user->ktp_address ?? '-') . "\n";
         }
 
-        $message .= "\n";
-        $message .= "📍 *Lokasi Pengantaran*\n";
-
-        if ($order->latitude !== null && $order->longitude !== null) {
-            $message .= "Latitude: {$order->latitude}\n";
-            $message .= "Longitude: {$order->longitude}\n";
-            $message .= "Koordinat: {$order->latitude}, {$order->longitude}\n";
-        }
-
-        $message .= "\n";
-        $message .= "Silakan periksa pesanan melalui sistem admin.";
+        $message .= "\nMohon siapkan valuta asing di Kantor Tanjung Karang untuk diambil oleh pelanggan.";
 
         return $this->sendTextMessage($adminPhone, $message);
     }

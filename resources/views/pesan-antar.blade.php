@@ -11,7 +11,7 @@
             </a>
 
             <span class="px-4 py-2 rounded-xl text-sm font-semibold bg-blue-500">
-                {{ __('Pesan Antar') }}
+                {{ __('Pemesanan Valas') }}
             </span>
         </div>
 
@@ -39,19 +39,24 @@
             <div class="flex items-center gap-4 mb-4">
                 <div
                     class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xl shadow-sm">
-                    <i class="fa-solid fa-truck"></i>
+                    <i class="fa-solid fa-building-flag"></i>
                 </div>
 
                 <div>
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
-                        {{ __('Pesan Antar Valuta Asing') }}
+                        {{ __('Pemesanan Valas (Ambil di Kantor Tanjung Karang)') }}
                     </h2>
                 </div>
             </div>
 
             <p class="text-sm text-gray-600 leading-relaxed">
-                {{ __('Silakan buat akun atau masuk ke akun Anda untuk melakukan pemesanan valuta asing melalui layanan pesan antar.') }}
+                {{ __('Pesan valuta asing secara online dan lakukan serah terima langsung di Kantor Pusat Tanjung Karang. Buat akun atau masuk ke akun Anda untuk memulai pemesanan multi-item.') }}
             </p>
+
+            <div class="mt-4 p-4 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-3 text-xs text-blue-800">
+                <i class="fa-solid fa-location-dot text-base text-blue-600"></i>
+                <span><b>Lokasi Pengambilan:</b> PT Bina Sukses Valasindo - Jl. Raden Intan No. 71, Tanjung Karang, Bandar Lampung (+62 821-6311-0597)</span>
+            </div>
 
         </div>
     </section>
@@ -71,7 +76,7 @@
             </h3>
 
             <p class="text-sm text-gray-500 leading-relaxed mb-6">
-                {{ __('Belum memiliki akun? Daftarkan diri Anda terlebih dahulu untuk menggunakan layanan pesan antar.') }}
+                {{ __('Belum memiliki akun? Daftarkan diri Anda dan lengkapi KTP sekali saja untuk pemesanan seterusnya.') }}
             </p>
 
             <a href="{{ route('customer.register') }}"
@@ -94,7 +99,7 @@
             </h3>
 
             <p class="text-sm text-gray-500 leading-relaxed mb-6">
-                {{ __('Masuk ke akun Anda untuk melanjutkan ke proses pemesanan valuta asing.') }}
+                {{ __('Masuk ke akun Anda untuk langsung memilih jenis dan nominal valuta asing yang ingin dipesan.') }}
             </p>
 
             <a href="{{ route('customer.login') }}"

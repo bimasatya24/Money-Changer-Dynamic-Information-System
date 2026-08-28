@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Upload;
 use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    public function ktp()
+    public function ktp(Request $request)
     {
         $user = Auth::user();
+
+        // Fitur Ingat Data Diri: Jika NIK & nama KTP sudah ada dan bukan mode edit (?edit=1), langsung ke order
+        if (!empty($user->nik) && !empty($user->ktp_name) && !$request->has('edit')) {
+            return redirect()->route('customer.order');
+        }
 
         return view('customer.ktp', compact('user'));
     }
@@ -32,62 +38,41 @@ class CustomerController extends Controller
         Auth::user()->update($validated);
 
         return redirect()
-            ->route('customer.location')
-            ->with('success', 'Data KTP berhasil disimpan.');
-    }
-
-    public function location()
-    {
-        return view('customer.location');
-    }
-
-    public function saveLocation(Request $request)
-    {
-        $validated = $request->validate([
-            'latitude' => ['required', 'numeric', 'between:-90,90'],
-            'longitude' => ['required', 'numeric', 'between:-180,180'],
-        ]);
-
-        session([
-            'delivery_location' => [
-                'latitude' => $validated['latitude'],
-                'longitude' => $validated['longitude'],
-            ],
-        ]);
-
-        return redirect()
             ->route('customer.order')
-            ->with('success', 'Lokasi pengantaran berhasil dipilih.');
+            ->with('success', 'Data profil KTP berhasil disimpan.');
     }
 
     public function order()
     {
-        return view('customer.order');
+        $user = Auth::user();
+
+        // Pastikan data KTP sudah ada sebelum order
+        if (empty($user->nik) || empty($user->ktp_name)) {
+            return redirect()
+                ->route('customer.ktp')
+                ->with('info', 'Silakan lengkapi data identitas KTP Anda terlebih dahulu sebelum melakukan pemesanan.');
+        }
+
+        $currencies = Upload::all();
+
+        return view('customer.order', compact('user', 'currencies'));
     }
 
     public function saveOrder(Request $request)
     {
         $validated = $request->validate([
-            'transaction_type' => ['required', 'in:buy,sell'],
-            'currency' => ['required', 'string', 'max:10'],
-            'amount' => ['required', 'numeric', 'min:1'],
+            'notes' => ['nullable', 'string', 'max:500'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.transaction_type' => ['required', 'in:buy,sell'],
+            'items.*.currency' => ['required', 'string', 'max:20'],
+            'items.*.amount' => ['required', 'numeric', 'min:1'],
         ]);
-
-        $deliveryLocation = session('delivery_location');
-
-        if (! $deliveryLocation) {
-            return redirect()
-                ->route('customer.location')
-                ->withErrors([
-                    'location' => 'Lokasi pengantaran belum dipilih.',
-                ]);
-        }
 
         session([
             'order_data' => [
-                'transaction_type' => $validated['transaction_type'],
-                'currency' => $validated['currency'],
-                'amount' => $validated['amount'],
+                'pickup_location' => 'Kantor Tanjung Karang',
+                'notes' => $validated['notes'] ?? null,
+                'items' => $validated['items'],
             ],
         ]);
 
@@ -98,53 +83,61 @@ class CustomerController extends Controller
     public function confirmation()
     {
         $orderData = session('order_data');
-        $deliveryLocation = session('delivery_location');
 
-        if (! $orderData || ! $deliveryLocation) {
+        if (! $orderData || empty($orderData['items'])) {
             return redirect()
                 ->route('customer.order')
                 ->withErrors([
-                    'order' => 'Data pesanan belum lengkap.',
+                    'order' => 'Data pesanan belum lengkap atau sudah kedaluwarsa.',
                 ]);
         }
 
+        $user = Auth::user();
+
         return view('customer.confirmation', compact(
             'orderData',
-            'deliveryLocation'
+            'user'
         ));
     }
 
     public function confirmOrder(WhatsAppService $whatsappService)
     {
         $orderData = session('order_data');
-        $deliveryLocation = session('delivery_location');
 
-        if (! $orderData || ! $deliveryLocation) {
+        if (! $orderData || empty($orderData['items'])) {
             return redirect()
                 ->route('customer.order')
                 ->withErrors([
-                    'order' => 'Data pesanan belum lengkap.',
+                    'order' => 'Data pesanan belum lengkap atau sudah kedaluwarsa.',
                 ]);
         }
 
+        $firstItem = $orderData['items'][0];
+        $isSingle = count($orderData['items']) === 1;
+
         $order = Order::create([
             'user_id' => Auth::id(),
-            'transaction_type' => $orderData['transaction_type'],
-            'currency' => $orderData['currency'],
-            'amount' => $orderData['amount'],
-            'latitude' => $deliveryLocation['latitude'],
-            'longitude' => $deliveryLocation['longitude'],
+            'pickup_location' => 'Kantor Tanjung Karang',
+            'transaction_type' => $isSingle ? $firstItem['transaction_type'] : 'multi',
+            'currency' => $isSingle ? $firstItem['currency'] : 'MULTI',
+            'amount' => $isSingle ? $firstItem['amount'] : collect($orderData['items'])->sum('amount'),
             'status' => 'pending',
+            'notes' => $orderData['notes'] ?? null,
         ]);
 
-        $order->load('user');
+        foreach ($orderData['items'] as $item) {
+            $order->items()->create([
+                'transaction_type' => $item['transaction_type'],
+                'currency' => $item['currency'],
+                'amount' => $item['amount'],
+            ]);
+        }
+
+        $order->load(['user', 'items']);
 
         $whatsappService->sendOrderNotification($order);
 
-        session()->forget([
-            'order_data',
-            'delivery_location',
-        ]);
+        session()->forget('order_data');
 
         return redirect()
             ->route('customer.order.success');

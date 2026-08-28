@@ -39,16 +39,18 @@
         </h2>
 
         {{-- Information --}}
-        <div class="mt-6 p-4 rounded-xl bg-blue-50 border border-blue-100 text-sm text-blue-800 text-left">
-
-            <div class="flex gap-3">
-                <i class="fa-solid fa-circle-info mt-0.5"></i>
-
-                <p>
-                    {{ __('Admin akan memproses pesanan Anda berdasarkan data yang telah dikirim.') }}
-                </p>
+        <div class="mt-6 p-5 rounded-2xl bg-blue-50/80 border border-blue-200 text-sm text-blue-900 text-left space-y-2">
+            <div class="flex items-center gap-2 font-bold text-blue-950">
+                <i class="fa-solid fa-building-circle-check text-blue-600 text-base"></i>
+                <span>{{ __('Pengambilan di Kantor Tanjung Karang (Pusat No. 1)') }}</span>
             </div>
-
+            <p class="text-xs text-gray-600">
+                {{ __('Pesanan valuta asing Anda telah masuk ke sistem kami. Silakan datang ke Kantor Pusat Tanjung Karang pada jam operasional untuk melakukan transaksi dan serah terima valas.') }}
+            </p>
+            <div class="pt-2 border-t border-blue-200/60 text-xs flex flex-wrap justify-between text-gray-700">
+                <span><b>Alamat:</b> Jl. Raden Intan No. 71, Tanjung Karang</span>
+                <span><b>WhatsApp:</b> +62 821-6311-0597</span>
+            </div>
         </div>
 
         {{-- Button --}}
