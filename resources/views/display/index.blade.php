@@ -9,8 +9,8 @@
                         <tr class="font-bold">
                             <th class="bg-[rgb(220,53,69)] text-white border border-slate-300 p-1 align-middle">MATA UANG</th>
                             <th class="bg-[rgb(118,117,125)] text-white border border-slate-300 p-1 align-middle">PECAHAN</th>
-                            <th class="bg-[rgb(255,193,7)] text-black border border-slate-300 p-1 align-middle">BELI</th>
-                            <th class="bg-[rgb(25,135,84)] text-black border border-slate-300 p-1 align-middle">JUAL</th>
+                            <th class="bg-[rgb(255,193,7)] text-black border border-slate-300 p-1 align-middle">BSV BELI</th>
+                            <th class="bg-[rgb(25,135,84)] text-black border border-slate-300 p-1 align-middle">BSV JUAL</th>
                         </tr>
                     </thead>
                     <tbody>

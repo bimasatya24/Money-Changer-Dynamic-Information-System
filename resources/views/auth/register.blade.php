@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 flex justify-between items-center py-2.5">
 
         <div class="flex items-center space-x-2">
-            <a href="{{ route('pesan-antar') }}"
+            <a href="{{ route('pemesanan-valas') }}"
                 class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
                 {{ __('Kembali') }}
@@ -70,7 +70,8 @@
                 <div class="relative">
                     <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
 
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Masukkan nama Anda') }}"
+                    <input type="text" id="name" name="name" value="{{ old('name') }}"
+                        placeholder="{{ __('Masukkan nama Anda') }}"
                         class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
 

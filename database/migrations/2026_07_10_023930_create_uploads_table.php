@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('MATA_UANG');
             $table->string('PECAHAN');
-            $table->decimal('BSV BELI', 10, 2);
-            $table->decimal('BSV JUAL', 10, 2);
+            $table->decimal('BELI', 10, 2);
+            $table->decimal('JUAL', 10, 2);
             $table->timestamps();
         });
     }

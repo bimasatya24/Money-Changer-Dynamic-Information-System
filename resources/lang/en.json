@@ -123,7 +123,15 @@
     "Ubah Data Diri": "Edit Profile Details",
     "Pemesan Terdaftar:": "Registered Customer:",
     "Saya ingin beli": "I want to buy",
-    "Saya ingin jual": "I want to sell",
     "Daftar Mata Uang yang Dipesan": "Ordered Currency List",
-    "Ubah Pesanan": "Edit Order"
+    "Ubah Pesanan": "Edit Order",
+    "Alur Pemesanan Valas": "Currency Booking Flow",
+    "4 langkah mudah melakukan pemesanan valas untuk serah terima di Kantor Tanjung Karang.": "4 easy steps to book currency for pickup at Tanjung Karang Branch.",
+    "Registrasi / Masuk": "Register / Sign In",
+    "Daftarkan akun baru atau masuk dengan akun Anda untuk memulai proses pemesanan.": "Register a new account or sign in to start the ordering process.",
+    "Isi data identitas KTP Anda sekali saja. Sistem otomatis mengingat data diri Anda untuk pemesanan seterusnya.": "Fill in your ID Card information once. The system automatically remembers your profile for all future orders.",
+    "Pilih Valas (Multi-Item)": "Select Currencies (Multi-Item)",
+    "Pilih jenis transaksi (Beli / Jual), mata uang, dan nominal. Anda bisa memesan lebih dari 1 jenis valas.": "Choose transaction type (Buy / Sell), currency, and amount. You can order multiple currencies at once.",
+    "Ambil di Kantor Pusat": "Pick Up at Main Branch",
+    "Konfirmasi pesanan, lalu datang langsung ke Kantor Tanjung Karang untuk serah terima valas Anda.": "Confirm your order, then visit our Tanjung Karang Branch directly to receive your currency."
 }

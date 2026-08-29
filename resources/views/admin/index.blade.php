@@ -147,11 +147,11 @@
                             </th>
 
                             <th class="py-3.5 px-4 bg-blue-700">
-                                BELI (IDR)
+                                BSV BELI (IDR)
                             </th>
 
                             <th class="py-3.5 px-4 bg-blue-800">
-                                JUAL (IDR)
+                                BSV JUAL (IDR)
                             </th>
 
                         </tr>

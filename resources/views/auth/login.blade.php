@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 flex justify-between items-center py-2.5">
 
         <div class="flex items-center space-x-2">
-            <a href="{{ route('pesan-antar') }}"
+            <a href="{{ route('pemesanan-valas') }}"
                 class="px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-500 transition-colors">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
                 {{ __('Kembali') }}

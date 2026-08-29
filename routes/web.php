@@ -36,9 +36,9 @@ Route::get('/api/rates', function () {
     return response()->json(Upload::all());
 })->name('api.rates');
 
-Route::get('/pesan-antar', function() {
-    return view('pesan-antar');
-})->name('pesan-antar');
+Route::get('/pemesanan-valas', function() {
+    return view('pemesanan-valas');
+})->name('pemesanan-valas');
 
 // =========================
 // AUTH PELANGGAN
@@ -67,30 +67,30 @@ Route::post('/logout', [AuthController::class, 'customerLogout'])
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/pesan-antar/ktp', [CustomerController::class, 'ktp'])
+    Route::get('/pemesanan-valas/ktp', [CustomerController::class, 'ktp'])
         ->name('customer.ktp');
 
-    Route::post('/pesan-antar/ktp', [CustomerController::class, 'saveKtp'])
+    Route::post('/pemesanan-valas/ktp', [CustomerController::class, 'saveKtp'])
         ->name('customer.ktp.save');
 
-    Route::get('/pesan-antar/lokasi', [CustomerController::class, 'location'])
+    Route::get('/pemesanan-valas/lokasi', [CustomerController::class, 'location'])
         ->name('customer.location');
 
-    Route::post('/pesan-antar/lokasi', [CustomerController::class, 'saveLocation'])
+    Route::post('/pemesanan-valas/lokasi', [CustomerController::class, 'saveLocation'])
         ->name('customer.location.save');
 
-    Route::get('/pesan-antar/pesanan', [CustomerController::class, 'order'])
+    Route::get('/pemesanan-valas/pesanan', [CustomerController::class, 'order'])
         ->name('customer.order');    
 
-    Route::post('/pesan-antar/pesanan', [CustomerController::class, 'saveOrder'])
+    Route::post('/pemesanan-valas/pesanan', [CustomerController::class, 'saveOrder'])
         ->name('customer.order.save');
 
-    Route::get('/pesan-antar/konfirmasi', [CustomerController::class, 'confirmation'])
+    Route::get('/pemesanan-valas/konfirmasi', [CustomerController::class, 'confirmation'])
         ->name('customer.order.confirmation');
 
-    Route::post('/pesan-antar/konfirmasi', [CustomerController::class, 'confirmOrder'])
+    Route::post('/pemesanan-valas/konfirmasi', [CustomerController::class, 'confirmOrder'])
         ->name('customer.order.confirm');
 
-    Route::get('/pesan-antar/berhasil', [CustomerController::class, 'success'])
+    Route::get('/pemesanan-valas/berhasil', [CustomerController::class, 'success'])
     ->name('customer.order.success');    
 });

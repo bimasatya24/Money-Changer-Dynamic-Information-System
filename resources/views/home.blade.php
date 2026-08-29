@@ -16,7 +16,11 @@
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Company Profile') }}
             </a>
-            <a href="{{ route('pesan-antar') }}"
+            <a href="#cara-pemesanan-valas"
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
+                {{ __('Alur Pemesanan Valas') }}
+            </a>
+            <a href="{{ route('pemesanan-valas') }}"
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Pemesanan Valas') }}
             </a>
@@ -393,21 +397,21 @@
     </div>
 </div>
 
-<section id="cara-pesan-antar" class="mt-16 scroll-mt-20">
+<section id="cara-pemesanan-valas" class="mt-16 scroll-mt-20">
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
 
         <div class="flex items-center gap-3 mb-6">
             <div
                 class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                <i class="fa-solid fa-truck"></i>
+                <i class="fa-solid fa-list-check"></i>
             </div>
 
             <div>
                 <h2 class="text-xl md:text-2xl font-bold text-gray-800">
-                    {{ __('Cara Pesan Antar') }}
+                    {{ __('Alur Pemesanan Valas') }}
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">
-                    {{ __('Ikuti beberapa langkah berikut untuk melakukan pemesanan layanan pesan antar.') }}
+                    {{ __('4 langkah mudah melakukan pemesanan valas untuk serah terima di Kantor Tanjung Karang.') }}
                 </p>
             </div>
         </div>
@@ -415,70 +419,70 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
             {{-- Langkah 1 --}}
-            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:border-blue-300 transition-colors">
                 <div class="flex items-center gap-3 mb-3">
                     <span
-                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
                         1
                     </span>
                     <h3 class="font-bold text-gray-800">
-                        {{ __('Lengkapi Data') }}
+                        {{ __('Registrasi / Masuk') }}
                     </h3>
                 </div>
 
                 <p class="text-sm text-gray-600 leading-relaxed">
-                    {{ __('Lengkapi data pelanggan yang diperlukan sebelum melanjutkan proses pemesanan.') }}
+                    {{ __('Daftarkan akun baru atau masuk dengan akun Anda untuk memulai proses pemesanan.') }}
                 </p>
             </div>
 
             {{-- Langkah 2 --}}
-            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:border-blue-300 transition-colors">
                 <div class="flex items-center gap-3 mb-3">
                     <span
-                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
                         2
                     </span>
                     <h3 class="font-bold text-gray-800">
-                        {{ __('Tentukan Lokasi') }}
+                        {{ __('Lengkapi Data KTP') }}
                     </h3>
                 </div>
 
                 <p class="text-sm text-gray-600 leading-relaxed">
-                    {{ __('Tentukan lokasi pengantaran yang akan digunakan untuk proses pesan antar.') }}
+                    {{ __('Isi data identitas KTP Anda sekali saja. Sistem otomatis mengingat data diri Anda untuk pemesanan seterusnya.') }}
                 </p>
             </div>
 
             {{-- Langkah 3 --}}
-            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:border-blue-300 transition-colors">
                 <div class="flex items-center gap-3 mb-3">
                     <span
-                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
                         3
                     </span>
                     <h3 class="font-bold text-gray-800">
-                        {{ __('Isi Pesanan') }}
+                        {{ __('Pilih Valas (Multi-Item)') }}
                     </h3>
                 </div>
 
                 <p class="text-sm text-gray-600 leading-relaxed">
-                    {{ __('Tentukan mata uang, nominal, dan data pesanan yang diperlukan.') }}
+                    {{ __('Pilih jenis transaksi (Beli / Jual), mata uang, dan nominal. Anda bisa memesan lebih dari 1 jenis valas.') }}
                 </p>
             </div>
 
             {{-- Langkah 4 --}}
-            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5">
+            <div class="relative bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:border-blue-300 transition-colors">
                 <div class="flex items-center gap-3 mb-3">
                     <span
-                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
                         4
                     </span>
                     <h3 class="font-bold text-gray-800">
-                        {{ __('Kirim Pesanan') }}
+                        {{ __('Ambil di Kantor Pusat') }}
                     </h3>
                 </div>
 
                 <p class="text-sm text-gray-600 leading-relaxed">
-                    {{ __('Periksa kembali data pesanan kemudian kirim pesanan untuk diproses.') }}
+                    {{ __('Konfirmasi pesanan, lalu datang langsung ke Kantor Tanjung Karang untuk serah terima valas Anda.') }}
                 </p>
             </div>
 
