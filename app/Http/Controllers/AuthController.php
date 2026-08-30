@@ -32,7 +32,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login_error' => 'Username atau Password salah.',
+            'login_error' => __('Username atau Password salah.'),
         ]);
     }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         return redirect()
             ->route('customer.login')
-            ->with('success', 'Akun berhasil dibuat. Silakan masuk.');
+            ->with('success', __('Akun berhasil dibuat. Silakan masuk.'));
     }
 
     // =========================
@@ -73,7 +73,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login_error' => 'Nama atau Password salah.',
+            'login_error' => __('Nama atau Password salah.'),
         ])->onlyInput('name');
     }
 

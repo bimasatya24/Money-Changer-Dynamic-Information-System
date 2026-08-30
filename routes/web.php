@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UploadController;
-use App\Http\Controllers\CustomerController;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
-
 
 Route::get('/', function () {
     $allUpload = Upload::all();
@@ -36,7 +35,7 @@ Route::get('/api/rates', function () {
     return response()->json(Upload::all());
 })->name('api.rates');
 
-Route::get('/pemesanan-valas', function() {
+Route::get('/pemesanan-valas', function () {
     return view('pemesanan-valas');
 })->name('pemesanan-valas');
 
@@ -80,7 +79,7 @@ Route::middleware('auth')->group(function () {
         ->name('customer.location.save');
 
     Route::get('/pemesanan-valas/pesanan', [CustomerController::class, 'order'])
-        ->name('customer.order');    
+        ->name('customer.order');
 
     Route::post('/pemesanan-valas/pesanan', [CustomerController::class, 'saveOrder'])
         ->name('customer.order.save');
@@ -92,5 +91,20 @@ Route::middleware('auth')->group(function () {
         ->name('customer.order.confirm');
 
     Route::get('/pemesanan-valas/berhasil', [CustomerController::class, 'success'])
-    ->name('customer.order.success');    
+        ->name('customer.order.success');
+
+    Route::get('/pemesanan-valas/keranjang', [CustomerController::class, 'cart'])
+        ->name('customer.cart');
+
+    Route::post('/pemesanan-valas/keranjang', [CustomerController::class, 'addToCart'])
+        ->name('customer.cart.add');
+
+    Route::put('/pemesanan-valas/keranjang/{index}', [CustomerController::class, 'updateCart'])
+        ->name('customer.cart.update');
+
+    Route::delete('/pemesanan-valas/keranjang/{index}', [CustomerController::class, 'removeFromCart'])
+        ->name('customer.cart.remove');
+
+    Route::get('/pemesanan-valas/checkout', [CustomerController::class, 'checkout'])
+        ->name('customer.checkout');
 });

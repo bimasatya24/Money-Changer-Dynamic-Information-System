@@ -15,7 +15,7 @@ class CustomerController extends Controller
         $user = Auth::user();
 
         // Fitur Ingat Data Diri: Jika NIK & nama KTP sudah ada dan bukan mode edit (?edit=1), langsung ke order
-        if (!empty($user->nik) && !empty($user->ktp_name) && !$request->has('edit')) {
+        if (! empty($user->nik) && ! empty($user->ktp_name) && ! $request->has('edit')) {
             return redirect()->route('customer.order');
         }
 
@@ -26,7 +26,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'ktp_name' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'digits:16', 'unique:users,nik,' . Auth::id()],
+            'nik' => ['required', 'digits:16', 'unique:users,nik,'.Auth::id()],
             'phone' => ['required', 'string', 'max:20'],
             'ktp_address' => ['required', 'string'],
             'rt_rw' => ['required', 'string', 'max:20'],
@@ -39,7 +39,7 @@ class CustomerController extends Controller
 
         return redirect()
             ->route('customer.order')
-            ->with('success', 'Data profil KTP berhasil disimpan.');
+            ->with('success', __('Data profil KTP berhasil disimpan.'));
     }
 
     public function order()
@@ -50,12 +50,110 @@ class CustomerController extends Controller
         if (empty($user->nik) || empty($user->ktp_name)) {
             return redirect()
                 ->route('customer.ktp')
-                ->with('info', 'Silakan lengkapi data identitas KTP Anda terlebih dahulu sebelum melakukan pemesanan.');
+                ->with('info', __('Silakan lengkapi data identitas KTP Anda terlebih dahulu sebelum melakukan pemesanan.'));
         }
 
         $currencies = Upload::all();
 
         return view('customer.order', compact('user', 'currencies'));
+    }
+
+    public function cart()
+    {
+        $cart = session()->get('cart', []);
+        $notes = session()->get('cart_notes');
+
+        return view('customer.cart', compact('cart', 'notes'));
+    }
+
+    public function addToCart(Request $request)
+    {
+        $validated = $request->validate([
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.transaction_type' => ['required', 'in:buy,sell'],
+            'items.*.currency' => ['required', 'string', 'max:20'],
+            'items.*.amount' => ['required', 'numeric', 'min:1'],
+            'notes' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        foreach ($validated['items'] as $newItem) {
+            $found = false;
+
+            foreach ($cart as &$cartItem) {
+                if (
+                    $cartItem['transaction_type'] === $newItem['transaction_type']
+                    && $cartItem['currency'] === $newItem['currency']
+                ) {
+                    $cartItem['amount'] += $newItem['amount'];
+                    $found = true;
+                    break;
+                }
+            }
+
+            unset($cartItem);
+
+            if (! $found) {
+                $cart[] = [
+                    'transaction_type' => $newItem['transaction_type'],
+                    'currency' => $newItem['currency'],
+                    'amount' => $newItem['amount'],
+                ];
+            }
+        }
+
+        session()->put('cart', $cart);
+
+        if (array_key_exists('notes', $validated)) {
+            session()->put('cart_notes', $validated['notes']);
+        }
+
+        return redirect()
+            ->route('customer.cart')
+            ->with('success', __('Valuta berhasil ditambahkan ke keranjang.'));
+    }
+
+    public function updateCart(Request $request, int $index)
+    {
+        $validated = $request->validate([
+            'amount' => ['required', 'numeric', 'min:1'],
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        if (! isset($cart[$index])) {
+            return redirect()
+                ->route('customer.cart')
+                ->with('error', __('Item keranjang tidak ditemukan.'));
+        }
+
+        $cart[$index]['amount'] = $validated['amount'];
+
+        session()->put('cart', $cart);
+
+        return redirect()
+            ->route('customer.cart')
+            ->with('success', __('Jumlah valuta berhasil diperbarui.'));
+    }
+
+    public function removeFromCart(int $index)
+    {
+        $cart = session()->get('cart', []);
+
+        if (! isset($cart[$index])) {
+            return redirect()
+                ->route('customer.cart')
+                ->with('error', __('Item keranjang tidak ditemukan.'));
+        }
+
+        unset($cart[$index]);
+
+        session()->put('cart', array_values($cart));
+
+        return redirect()
+            ->route('customer.cart')
+            ->with('success', __('Item berhasil dihapus dari keranjang.'));
     }
 
     public function saveOrder(Request $request)
@@ -88,7 +186,7 @@ class CustomerController extends Controller
             return redirect()
                 ->route('customer.order')
                 ->withErrors([
-                    'order' => 'Data pesanan belum lengkap atau sudah kedaluwarsa.',
+                    'order' => __('Data pesanan belum lengkap atau sudah kedaluwarsa.'),
                 ]);
         }
 
@@ -108,7 +206,7 @@ class CustomerController extends Controller
             return redirect()
                 ->route('customer.order')
                 ->withErrors([
-                    'order' => 'Data pesanan belum lengkap atau sudah kedaluwarsa.',
+                    'order' => __('Data pesanan belum lengkap atau sudah kedaluwarsa.'),
                 ]);
         }
 
@@ -146,5 +244,27 @@ class CustomerController extends Controller
     public function success()
     {
         return view('customer.success');
+    }
+
+    public function checkout()
+    {
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()
+                ->route('customer.cart')
+                ->with('error', __('Keranjang pesanan masih kosong.'));
+        }
+
+        session([
+            'order_data' => [
+                'pickup_location' => 'Kantor Tanjung Karang',
+                'notes' => session('cart_notes'),
+                'items' => $cart,
+            ],
+        ]);
+
+        return redirect()
+            ->route('customer.order.confirmation');
     }
 }
