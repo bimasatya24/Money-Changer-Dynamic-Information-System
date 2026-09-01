@@ -98,11 +98,6 @@
                 </table>
             </div>
 
-            @if(!empty($orderData['notes']))
-            <div class="mt-4 pt-3 border-t border-gray-200 text-xs text-gray-600">
-                <span class="font-bold text-gray-700">{{ __('Catatan:') }}</span> {{ $orderData['notes'] }}
-            </div>
-            @endif
         </div>
 
         {{-- Lokasi Pengambilan: Kantor Pusat Tanjung Karang --}}

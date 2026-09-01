@@ -84,7 +84,6 @@ class WhatsAppService
 
         $message .= "📋 *Informasi Pesanan*\n";
         $message .= "Kode Pesanan: #{$order->id}\n";
-        $message .= "Status: " . ucfirst($order->status ?? 'pending') . "\n";
         $message .= "🏢 *Lokasi Pengambilan*: Kantor Tanjung Karang (No. 1)\n\n";
 
         $message .= "💱 *Daftar Item Valuta:*\n";
@@ -101,16 +100,12 @@ class WhatsAppService
             $message .= "1. [{$type}] {$amountFormatted} {$order->currency}\n";
         }
 
-        if (! empty($order->notes)) {
-            $message .= "Catatan: {$order->notes}\n";
-        }
-
         $message .= "\n👤 *Data Pelanggan:*\n";
         if ($order->user) {
-            $message .= "Nama: " . ($order->user->ktp_name ?? '-') . "\n";
-            $message .= "No. HP: " . ($order->user->phone ?? '-') . "\n";
-            $message .= "NIK: " . ($order->user->nik ?? '-') . "\n";
-            $message .= "Alamat KTP: " . ($order->user->ktp_address ?? '-') . "\n";
+            $message .= 'Nama: '.($order->user->ktp_name ?? '-')."\n";
+            $message .= 'No. HP: '.($order->user->phone ?? '-')."\n";
+            $message .= 'NIK: '.($order->user->nik ?? '-')."\n";
+            $message .= 'Alamat KTP: '.($order->user->ktp_address ?? '-')."\n";
         }
 
         $message .= "\nMohon siapkan valuta asing di Kantor Tanjung Karang untuk diambil oleh pelanggan.";

@@ -22,8 +22,6 @@ return [
         'kecamatan' => 'kecamatan',
         'occupation' => 'pekerjaan',
 
-        'latitude' => 'latitude',
-        'longitude' => 'longitude',
     ],
 
 ];

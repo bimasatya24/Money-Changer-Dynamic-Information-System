@@ -14,16 +14,10 @@ class Order extends Model
         'transaction_type',
         'currency',
         'amount',
-        'latitude',
-        'longitude',
-        'status',
-        'notes',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
-        'latitude' => 'decimal:7',
-        'longitude' => 'decimal:7',
     ];
 
     public function user(): BelongsTo

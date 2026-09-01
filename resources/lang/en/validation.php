@@ -23,8 +23,6 @@ return [
 
         'occupation' => 'occupation',
 
-        'latitude' => 'latitude',
-        'longitude' => 'longitude',
     ],
 
 ];

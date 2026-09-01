@@ -187,19 +187,6 @@
 
         </div>
 
-        @if(!empty($notes))
-            <div class="mt-5 p-4 rounded-xl bg-gray-50 border border-gray-200">
-                <p class="text-xs font-bold text-gray-700 mb-1">
-                    <i class="fa-solid fa-note-sticky mr-1"></i>
-                    {{ __('Catatan Pesanan') }}
-                </p>
-
-                <p class="text-sm text-gray-600">
-                    {{ $notes }}
-                </p>
-            </div>
-        @endif
-
         <div class="mt-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
 
             <a

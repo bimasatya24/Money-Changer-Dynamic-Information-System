@@ -61,9 +61,8 @@ class CustomerController extends Controller
     public function cart()
     {
         $cart = session()->get('cart', []);
-        $notes = session()->get('cart_notes');
 
-        return view('customer.cart', compact('cart', 'notes'));
+        return view('customer.cart', compact('cart'));
     }
 
     public function addToCart(Request $request)
@@ -73,7 +72,6 @@ class CustomerController extends Controller
             'items.*.transaction_type' => ['required', 'in:buy,sell'],
             'items.*.currency' => ['required', 'string', 'max:20'],
             'items.*.amount' => ['required', 'numeric', 'min:1'],
-            'notes' => ['nullable', 'string', 'max:500'],
         ]);
 
         $cart = session()->get('cart', []);
@@ -104,10 +102,6 @@ class CustomerController extends Controller
         }
 
         session()->put('cart', $cart);
-
-        if (array_key_exists('notes', $validated)) {
-            session()->put('cart_notes', $validated['notes']);
-        }
 
         return redirect()
             ->route('customer.cart')
@@ -159,7 +153,6 @@ class CustomerController extends Controller
     public function saveOrder(Request $request)
     {
         $validated = $request->validate([
-            'notes' => ['nullable', 'string', 'max:500'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.transaction_type' => ['required', 'in:buy,sell'],
             'items.*.currency' => ['required', 'string', 'max:20'],
@@ -169,7 +162,6 @@ class CustomerController extends Controller
         session([
             'order_data' => [
                 'pickup_location' => 'Kantor Tanjung Karang',
-                'notes' => $validated['notes'] ?? null,
                 'items' => $validated['items'],
             ],
         ]);
@@ -219,8 +211,6 @@ class CustomerController extends Controller
             'transaction_type' => $isSingle ? $firstItem['transaction_type'] : 'multi',
             'currency' => $isSingle ? $firstItem['currency'] : 'MULTI',
             'amount' => $isSingle ? $firstItem['amount'] : collect($orderData['items'])->sum('amount'),
-            'status' => 'pending',
-            'notes' => $orderData['notes'] ?? null,
         ]);
 
         foreach ($orderData['items'] as $item) {
@@ -259,7 +249,6 @@ class CustomerController extends Controller
         session([
             'order_data' => [
                 'pickup_location' => 'Kantor Tanjung Karang',
-                'notes' => session('cart_notes'),
                 'items' => $cart,
             ],
         ]);

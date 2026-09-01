@@ -61,7 +61,7 @@ Route::post('/logout', [AuthController::class, 'customerLogout'])
     ->name('customer.logout');
 
 // =========================
-// PESAN ANTAR - PELANGGAN
+// PEMESANAN VALAS - PELANGGAN
 // =========================
 
 Route::middleware('auth')->group(function () {
