@@ -48,33 +48,6 @@
         </a>
     </div>
 
-    {{-- Card Lokasi Pengambilan: Kantor Pusat Tanjung Karang --}}
-    <div class="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl text-white p-6 shadow-md mb-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <div
-                    class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold mb-2">
-                    <i class="fa-solid fa-building-flag"></i> {{ __('Khusus Ambil di Kantor Pusat') }}
-                </div>
-                <h2 class="text-xl md:text-2xl font-extrabold tracking-tight">
-                    {{ __('Kantor Tanjung Karang (Pusat No. 1)') }}</h2>
-                <p class="text-xs md:text-sm text-blue-100 mt-1">
-                    Jl. Raden Intan No. 71, Tanjung Karang, Bandar Lampung
-                </p>
-                <div class="mt-3 flex flex-wrap gap-3 text-xs text-blue-200">
-                    <span><i class="fa-solid fa-clock mr-1"></i> <b>{{ __('Senin - Jum\'at') }}:</b> 08.45 - 17.00 |
-                        <b>{{ __('Sabtu') }}:</b> 08.45 - 14.30</span>
-                    <span><i class="fa-solid fa-phone mr-1"></i> +62 821-6311-0597</span>
-                </div>
-            </div>
-            <div class="hidden lg:block text-right">
-                <span class="inline-block px-4 py-2 bg-emerald-500/90 text-white rounded-xl text-xs font-bold shadow">
-                    <i class="fa-solid fa-handshake mr-1"></i> {{ __('Siap Diambil di Lokasi') }}
-                </span>
-            </div>
-        </div>
-    </div>
-
     {{-- Form Pemesanan Multi-Item --}}
     <section class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
 
@@ -149,7 +122,7 @@
                                 @if (isset($currencies) && $currencies->count() > 0)
                                     @foreach ($currencies as $c)
                                         <option value="{{ $c->MATA_UANG }}" {{ $loop->first ? 'selected' : '' }}>
-                                            {{ $c->MATA_UANG }} ({{ $c->PECAHAN }})
+                                            {{ Lang::has('currency.' . $c->MATA_UANG) ? __('currency.' . $c->MATA_UANG) : $c->MATA_UANG }} ({{ $c->PECAHAN }})
                                         </option>
                                     @endforeach
                                 @else
@@ -186,16 +159,6 @@
                     <i class="fa-solid fa-circle-plus text-base"></i>
                     <span>{{ __('+ Tambah Mata Uang / Item Lain') }}</span>
                 </button>
-            </div>
-
-            {{-- Catatan Tambahan --}}
-            <div class="mb-6">
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
-                    {{ __('Catatan Tambahan (Opsional)') }}
-                </label>
-                <textarea name="notes" rows="2"
-                    placeholder="{{ __('Misal: Perkiraan tiba jam 10 pagi, butuh pecahan baru...') }}"
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
             </div>
 
             {{-- Ringkasan Pesanan Live --}}
@@ -244,7 +207,7 @@
     @if (isset($currencies) && $currencies->count() > 0)
         @foreach ($currencies as $c)
             <option value="{{ $c->MATA_UANG }}">
-                {{ $c->MATA_UANG }} ({{ $c->PECAHAN }})
+                {{ Lang::has('currency.' . $c->MATA_UANG) ? __('currency.' . $c->MATA_UANG) : $c->MATA_UANG }} ({{ $c->PECAHAN }})
             </option>
         @endforeach
     @else
@@ -344,6 +307,8 @@
         });
     }
 
+    const currencyNames = @json(trans('currency'));
+
     function updateLiveSummary() {
         const rows = document.querySelectorAll('.item-row');
         const summaryList = document.getElementById('summaryList');
@@ -354,7 +319,8 @@
 
         rows.forEach((row, i) => {
             const type = row.querySelector('.item-type').value;
-            const currency = row.querySelector('.item-currency').value || '-';
+            const currencyCode = row.querySelector('.item-currency').value || '-';
+            const currency = currencyNames[currencyCode] || currencyCode;
             const amount = parseFloat(row.querySelector('.item-amount').value) || 0;
             const formattedAmount = amount.toLocaleString('id-ID');
 
@@ -367,7 +333,7 @@
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-gray-500">#${i + 1}</span>
                         <span class="px-2 py-0.5 rounded text-[11px] font-bold ${badgeClass}">${typeLabel}</span>
-                        <span class="font-bold text-gray-800">${currency}</span>
+                        <span class="font-bold text-gray-800">${formattedAmount} ${currency}</span>
                     </div>
                     <span class="font-bold text-gray-800">${formattedAmount} ${currency}</span>
                 </div>

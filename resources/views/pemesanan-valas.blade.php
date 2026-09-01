@@ -53,11 +53,6 @@
                 {{ __('Pesan valuta asing secara online dan lakukan serah terima langsung di Kantor Pusat Tanjung Karang. Buat akun atau masuk ke akun Anda untuk memulai pemesanan multi-item.') }}
             </p>
 
-            <div class="mt-4 p-4 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-3 text-xs text-blue-800">
-                <i class="fa-solid fa-location-dot text-base text-blue-600"></i>
-                <span><b>Lokasi Pengambilan:</b> PT Bina Sukses Valasindo - Jl. Raden Intan No. 71, Tanjung Karang, Bandar Lampung (+62 821-6311-0597)</span>
-            </div>
-
         </div>
     </section>
 
