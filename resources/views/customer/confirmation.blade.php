@@ -123,7 +123,7 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-600">{{ __('Jam Buka') }}:</span>
-                    <span class="font-semibold text-gray-800 text-right">Senin - Jum'at: 08.45 - 17.00 | Sabtu: 08.45 - 14.30</span>
+                    <span class="font-semibold text-gray-800 text-right">{{ __('Senin - Jumat: 08.45 - 17.00 | Sabtu: 08.45 - 14.30') }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-600">{{ __('WhatsApp / Telp') }}:</span>

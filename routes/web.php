@@ -72,12 +72,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan-valas/ktp', [CustomerController::class, 'saveKtp'])
         ->name('customer.ktp.save');
 
-    Route::get('/pemesanan-valas/lokasi', [CustomerController::class, 'location'])
-        ->name('customer.location');
-
-    Route::post('/pemesanan-valas/lokasi', [CustomerController::class, 'saveLocation'])
-        ->name('customer.location.save');
-
     Route::get('/pemesanan-valas/pesanan', [CustomerController::class, 'order'])
         ->name('customer.order');
 

@@ -267,7 +267,7 @@
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">
                         <p class="font-bold text-gray-700">{{ __('Jam Operasional') }}:</p>
-                        <p>{{ __('Senin - Jum'at') }}: 08.45 - 17.00</p>
+                        <p>{{ __('Senin - Jumat') }}: 08.45 - 17.00</p>
                         <p>{{ __('Sabtu') }}: 08.45 - 14.30</p>
                         <p class="text-red-500 font-semibold">{{ __('Minggu & Hari Libur Nasional : Tutup') }}</p>
                     </div>
@@ -302,7 +302,7 @@
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">
                         <p class="font-bold text-gray-700">{{ __('Jam Operasional') }}:</p>
-                        <p>{{ __('Senin - Jum'at') }}: 08.30 - 16.30</p>
+                        <p>{{ __('Senin - Jumat') }}: 08.30 - 16.30</p>
                         <p>{{ __('Sabtu') }}: 08.30 - 14.00</p>
                         <p class="text-red-500 font-semibold">{{ __('Minggu & Hari Libur Nasional : Tutup') }}</p>
                     </div>
@@ -337,7 +337,7 @@
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">
                         <p class="font-bold text-gray-700">{{ __('Jam Operasional') }}:</p>
-                        <p>{{ __('Senin - Jum'at') }}: 08.10 - 16.00</p>
+                        <p>{{ __('Senin - Jumat') }}: 08.10 - 16.00</p>
                         <p>{{ __('Sabtu') }}: 08.00 - 13.00</p>
                         <p class="text-red-500 font-semibold">{{ __('Minggu & Hari Libur Nasional : Tutup') }}</p>
                     </div>
