@@ -27,12 +27,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            Schema::table('orders', function (Blueprint $table) {
-                $table->decimal('latitude', 10, 7)->nullable();
-                $table->decimal('longitude', 10, 7)->nullable();
-                $table->string('status', 20)->default('pending');
-                $table->text('notes')->nullable();
-            });
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('status', 20)->default('pending');
+            $table->text('notes')->nullable();
         });
     }
 };
