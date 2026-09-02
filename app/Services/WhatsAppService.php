@@ -108,7 +108,7 @@ class WhatsAppService
             $message .= 'Alamat KTP: '.($order->user->ktp_address ?? '-')."\n";
         }
 
-        $message .= "\nMohon siapkan valuta asing di Kantor Tanjung Karang untuk diambil oleh pelanggan.";
+        $message .= "\nMohon siapkan valuta di Kantor Tanjung Karang untuk diambil oleh pelanggan.";
 
         return $this->sendTextMessage($adminPhone, $message);
     }
