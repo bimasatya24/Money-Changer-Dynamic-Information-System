@@ -24,9 +24,12 @@
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Pemesanan Valas') }}
             </a>
-            <span class="px-3 py-2 rounded-xl text-xs font-semibold opacity-75 cursor-not-allowed">
+            <a href="{{ config('app.kasir_url', env('KASIR_URL', 'http://localhost:8000')) }}"
+                target="_blank"
+                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors flex items-center gap-1">
+                <i class="fa-solid fa-cash-register"></i>
                 {{ __('Kasir') }}
-            </span>
+            </a>
         </div>
 
         <div class="flex items-center space-x-1.5 bg-blue-700 p-1 rounded-xl text-xs font-semibold">
