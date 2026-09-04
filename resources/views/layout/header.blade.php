@@ -14,10 +14,7 @@
             <div class="flex items-center justify-between min-h-20">
                 {{-- Logo BSV --}}
                 <div class="flex items-center">
-                    <img
-                        src="{{ asset('images\Logo-BSV.png') }}"
-                        alt="Logo BSV"
-                        class="h-14 w-auto object-contain">
+                    <img src="{{ asset('images\Logo-BSV.png') }}" alt="Logo BSV" class="h-14 w-auto object-contain">
                 </div>
 
                 {{-- Informasi Perusahaan --}}
@@ -31,22 +28,18 @@
                     </p>
 
                     <p>
-                        Jl. Proklamator Raya No. 331 (Area Belakang Bank Mandiri),
-                        Bandar Jaya Timur, Kec. Terbanggi Besar,
-                        Kab. Lampung Tengah, Lampung 34163
+                        Jl. Kartini No.51, Kartini, Kec. Tj. Karang Pusat, Kota Bandar Lampung, Lampung 35116
                     </p>
 
                     <p>
                         {{ __('Telepon / WhatsApp:') }}
-                        +62 857-8951-0332 / +62 853-6966-7788
+                        +62 852-6965-6868
                     </p>
                 </div>
 
                 {{-- Logo KUPVA Berizin --}}
                 <div class="flex items-center">
-                    <img
-                        src="{{ asset('images\Logo-KUPVA.png') }}"
-                        alt="Logo KUPVA Berizin"
+                    <img src="{{ asset('images\Logo-KUPVA.png') }}" alt="Logo KUPVA Berizin"
                         class="h-14 w-auto object-contain">
                 </div>
             </div>
