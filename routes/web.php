@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UploadController;
+use App\Models\RateHistory;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,23 @@ Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('l
 Route::get('/', function () {
     $allUpload = Upload::all();
 
-    return view('home', compact('allUpload'));
+    $historyByCurrency = RateHistory::where('tanggal', '>=', now()->subDays(30)->toDateString())
+        ->orderBy('tanggal', 'asc')
+        ->get()
+        ->groupBy(function ($item) {
+            return preg_replace('/[^A-Za-z0-9]/', '', $item->mata_uang . '_' . $item->pecahan);
+        })
+        ->map(function ($items) {
+            return $items->map(function ($item) {
+                return [
+                    'tanggal' => $item->tanggal,
+                    'beli'    => (float) $item->beli,
+                    'jual'    => (float) $item->jual,
+                ];
+            })->values();
+        });
+
+    return view('home', compact('allUpload', 'historyByCurrency'));
 })->name('home');
 
 Route::get('/admin/login', function () {
@@ -34,6 +51,26 @@ Route::get('/display', function () {
 Route::get('/api/rates', function () {
     return response()->json(Upload::all());
 })->name('api.rates');
+
+Route::get('/api/rate-history', function () {
+    $historyByCurrency = RateHistory::where('tanggal', '>=', now()->subDays(30)->toDateString())
+        ->orderBy('tanggal', 'asc')
+        ->get()
+        ->groupBy(function ($item) {
+            return preg_replace('/[^A-Za-z0-9]/', '', $item->mata_uang . '_' . $item->pecahan);
+        })
+        ->map(function ($items) {
+            return $items->map(function ($item) {
+                return [
+                    'tanggal' => $item->tanggal,
+                    'beli'    => (float) $item->beli,
+                    'jual'    => (float) $item->jual,
+                ];
+            })->values();
+        });
+
+    return response()->json($historyByCurrency);
+})->name('api.rate-history');
 
 Route::get('/pemesanan-valas', function () {
     return view('pemesanan-valas');

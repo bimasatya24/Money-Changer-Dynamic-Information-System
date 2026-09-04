@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\RateHistory;
 use App\Models\Upload;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -15,6 +16,7 @@ class UpdateWebImport implements ToCollection, WithCalculatedFormulas
     public function collection(Collection $rows)
     {
         $i = 0;
+        $today = now()->toDateString();
 
         foreach ($rows->slice(5) as $row) {
 
@@ -22,12 +24,29 @@ class UpdateWebImport implements ToCollection, WithCalculatedFormulas
                 break;
             }
 
+            $mataUang = KursValasImport::$kurs[$i]['mata_uang'];
+            $pecahan   = KursValasImport::$kurs[$i]['pecahan'];
+            $beli      = $this->formatKurs($row[12]);
+            $jual      = $this->formatKurs($row[13]);
+
             Upload::create([
-                'mata_uang' => KursValasImport::$kurs[$i]['mata_uang'],
-                'pecahan'   => KursValasImport::$kurs[$i]['pecahan'],
-                'beli'      => $this->formatKurs($row[12]),
-                'jual'      => $this->formatKurs($row[13]),
+                'mata_uang' => $mataUang,
+                'pecahan'   => $pecahan,
+                'beli'      => $beli,
+                'jual'      => $jual,
             ]);
+
+            RateHistory::updateOrCreate(
+                [
+                    'mata_uang' => $mataUang,
+                    'pecahan'   => $pecahan,
+                    'tanggal'   => $today,
+                ],
+                [
+                    'beli'      => $beli,
+                    'jual'      => $jual,
+                ]
+            );
 
             $i++;
         }

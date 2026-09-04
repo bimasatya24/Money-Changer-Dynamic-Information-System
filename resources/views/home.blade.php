@@ -1,5 +1,4 @@
 @include('layout.header')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-verdana">
     <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-2.5">
@@ -194,15 +193,18 @@
                             </td>
                             <td class="py-2 px-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <div class="w-28 h-9">
+                                    <div class="w-28 h-9 relative flex items-center justify-center">
                                         <canvas id="chart-{{ $cleanId }}"
                                             class="w-full h-full sparkline-canvas"
                                             data-base-rate="{{ $r->BELI }}"
                                             data-currency="{{ $cleanId }}"></canvas>
+                                        <span id="empty-{{ $cleanId }}" class="hidden text-[11px] text-gray-400 font-medium italic">
+                                            {{ __('Data baru') }}
+                                        </span>
                                     </div>
                                     <span id="badge-{{ $cleanId }}"
-                                        class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">
-                                        +0.00%
+                                        class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                                        0.00%
                                     </span>
                                 </div>
                             </td>
@@ -504,8 +506,9 @@
         });
     });
 
-    // --- STATE PERIODE TREN (7 Hari / 1 Bulan) ---
+    // --- STATE PERIODE TREN & RIWAYAT KURS REAL DARI UPLOAD ADMIN ---
     let currentTrendPeriod = '7d';
+    let rateHistories = @json($historyByCurrency ?? []);
 
     function switchTrendPeriod(period) {
         currentTrendPeriod = period;
@@ -526,32 +529,17 @@
         initAllSparklines();
     }
 
-    // --- LOGIKA GENERATOR & RENDER GRAFIK SPARKLINE (7 HARI & 30 HARI) ---
-    function get7DayHistory(baseRate, seedStr) {
-        let hash = 0;
-        for (let i = 0; i < seedStr.length; i++) hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
-        const multipliers = [
-            [-0.012, 0.005, -0.003, 0.008, -0.002, 0.004, 0],
-            [0.015, -0.008, 0.012, -0.005, -0.008, 0.003, 0],
-            [-0.008, -0.004, 0.006, 0.010, -0.005, -0.002, 0],
-            [0.006, 0.012, -0.007, 0.003, -0.009, 0.006, 0]
-        ];
-        const pattern = multipliers[Math.abs(hash) % multipliers.length];
-        return pattern.map(m => Math.round(baseRate * (1 + m) * 100) / 100);
-    }
-
-    function get30DayHistory(baseRate, seedStr) {
-        let hash = 0;
-        for (let i = 0; i < seedStr.length; i++) hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
-        const points = [];
-        let current = baseRate * (1 + ((Math.abs(hash) % 20) - 10) * 0.002);
-        for (let i = 0; i < 30; i++) {
-            const step = Math.sin((i + Math.abs(hash)) * 0.4) * 0.004 + (Math.cos(i * 0.7) * 0.002);
-            current = current * (1 + step);
-            points.push(Math.round(current * 100) / 100);
+    function formatDateLabel(dateStr) {
+        if (!dateStr) return '';
+        const today = new Date().toISOString().split('T')[0];
+        if (dateStr === today) return 'Hari ini';
+        try {
+            const parts = dateStr.split('-');
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            return `${parseInt(parts[2])} ${months[parseInt(parts[1]) - 1]}`;
+        } catch (e) {
+            return dateStr;
         }
-        points[29] = baseRate; // Titik terakhir selalu harga kurs hari ini
-        return points;
     }
 
     function renderSparklineChart(canvasId, badgeId, historyData, labels) {
@@ -568,12 +556,15 @@
         const diffPercent = first > 0 ? ((last - first) / first) * 100 : 0;
         const badge = document.getElementById(badgeId);
         if (badge) {
-            const sign = diffPercent >= 0 ? '+' : '';
-            badge.innerText = `${sign}${diffPercent.toFixed(2)}%`;
-            if (diffPercent >= 0) {
+            if (diffPercent > 0) {
+                badge.innerText = `+${diffPercent.toFixed(2)}%`;
                 badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600';
-            } else {
+            } else if (diffPercent < 0) {
+                badge.innerText = `${diffPercent.toFixed(2)}%`;
                 badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600';
+            } else {
+                badge.innerText = '0.00%';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500';
             }
         }
 
@@ -581,26 +572,21 @@
 
         const verticalLinePlugin = {
             id: 'verticalLine',
-
             afterDraw(chart) {
                 if (chart.tooltip?._active?.length) {
                     const activePoint = chart.tooltip._active[0];
                     const ctx = chart.ctx;
                     const x = activePoint.element.x;
-
                     const topY = chart.chartArea.top;
                     const bottomY = chart.chartArea.bottom;
 
                     ctx.save();
-
                     ctx.beginPath();
                     ctx.moveTo(x, topY);
                     ctx.lineTo(x, bottomY);
-
                     ctx.lineWidth = 1;
                     ctx.strokeStyle = '#9ca3af';
                     ctx.setLineDash([4, 4]);
-
                     ctx.stroke();
                     ctx.restore();
                 }
@@ -615,13 +601,12 @@
                 datasets: [{
                     data: historyData,
                     borderWidth: is7d ? 2 : 1.8,
-                    pointRadius: 0, // 7 Hari titik jelas, 30 Hari titik halus
+                    pointRadius: historyData.length <= 7 ? 2 : 0,
                     pointHoverRadius: 5,
                     pointBackgroundColor: '#ffffff',
                     pointBorderWidth: 2,
                     pointBorderColor: '#1e40af',
                     tension: 0.35,
-                    // KUNCI: Pewarnaan Dinamis Naik (Hijau) & Turun (Merah) dalam 1 gambar grafik
                     segment: {
                         borderColor: function(ctx) {
                             return ctx.p0.parsed.y <= ctx.p1.parsed.y ? '#059669' : '#dc2626';
@@ -646,6 +631,9 @@
                         yAlign: 'bottom',
                         caretPadding: 10,
                         callbacks: {
+                            title: function(tooltipItems) {
+                                return tooltipItems[0]?.label || '';
+                            },
                             label: function(context) {
                                 const val = context.parsed.y;
                                 return 'Rp ' + (val < 1000 && (val % 1 !== 0) ?
@@ -673,20 +661,52 @@
     function initAllSparklines() {
         const canvases = document.querySelectorAll('.sparkline-canvas');
         canvases.forEach(canvas => {
-            const baseRate = parseFloat(canvas.getAttribute('data-base-rate')) || 0;
             const currency = canvas.getAttribute('data-currency') || 'VALAS';
+            const baseRate = parseFloat(canvas.getAttribute('data-base-rate')) || 0;
+            const emptySpan = document.getElementById('empty-' + currency);
+            const badge = document.getElementById('badge-' + currency);
 
-            if (currentTrendPeriod === '7d') {
-                const history = get7DayHistory(baseRate, currency);
-                const labels = ['H-6', 'H-5', 'H-4', 'H-3', 'H-2', 'Kemarin', 'Hari ini'];
-                renderSparklineChart(canvas.id, 'badge-' + currency, history, labels);
-            } else {
-                const history = get30DayHistory(baseRate, currency);
-                const labels = Array.from({
-                    length: 30
-                }, (_, i) => i === 29 ? 'Hari ini' : (i === 28 ? 'Kemarin' : `H-${29 - i}`));
-                renderSparklineChart(canvas.id, 'badge-' + currency, history, labels);
+            let rawHistory = rateHistories[currency] ? [...rateHistories[currency]] : [];
+
+            // Pastikan data kurs hari ini selalu tercakup
+            const todayStr = new Date().toISOString().split('T')[0];
+            const hasToday = rawHistory.some(item => item.tanggal === todayStr);
+            if (!hasToday && baseRate > 0) {
+                rawHistory.push({
+                    tanggal: todayStr,
+                    beli: baseRate,
+                    jual: baseRate
+                });
             }
+
+            // Batasi sesuai periode yang dipilih
+            const maxPoints = currentTrendPeriod === '7d' ? 7 : 30;
+            const slicedHistory = rawHistory.slice(-maxPoints);
+
+            // JIKA RIWAYAT DARI UPLOAD ADMIN KURANG DARI 2 TITIK:
+            // Jangan gambar garis acak, tampilkan indikator "Data baru"
+            if (slicedHistory.length < 2) {
+                if (canvas._chartInstance) {
+                    canvas._chartInstance.destroy();
+                    canvas._chartInstance = null;
+                }
+                canvas.classList.add('hidden');
+                if (emptySpan) emptySpan.classList.remove('hidden');
+                if (badge) {
+                    badge.innerText = '0.00%';
+                    badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500';
+                }
+                return;
+            }
+
+            // JIKA RIWAYAT SUDAH ADA >= 2 TITIK DARI UPLOAD ADMIN:
+            if (emptySpan) emptySpan.classList.add('hidden');
+            canvas.classList.remove('hidden');
+
+            const historyData = slicedHistory.map(item => item.beli);
+            const labels = slicedHistory.map(item => formatDateLabel(item.tanggal));
+
+            renderSparklineChart(canvas.id, 'badge-' + currency, historyData, labels);
         });
     }
 
