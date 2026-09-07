@@ -267,7 +267,7 @@
                         <h3 class="font-bold text-gray-800 text-lg">{{ __('Kantor Tanjung Karang') }}</h3>
                     </div>
                     <p class="text-xs text-gray-500 font-medium mb-3">
-                        <b>{{ __('No. Telepon') }}:</b> +62 821-6311-0597
+                        <b>{{ __('No. Telepon') }}:</b> +62 852-6965-6868
                     </p>
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">
@@ -302,7 +302,7 @@
                         <h3 class="font-bold text-gray-800 text-lg">{{ __('Kantor Teluk Betung') }}</h3>
                     </div>
                     <p class="text-xs text-gray-500 font-medium mb-3">
-                        <b>{{ __('No. Telepon') }}:</b> (0721) 482884 / 488288
+                        <b>{{ __('No. Telepon') }}:</b> (0721) 484210 / 703038
                     </p>
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">

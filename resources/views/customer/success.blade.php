@@ -49,7 +49,7 @@
             </p>
             <div class="pt-2 border-t border-blue-200/60 text-xs flex flex-wrap justify-between text-gray-700">
                 <span><b>Alamat:</b> Jl. Raden Intan No. 71, Tanjung Karang</span>
-                <span><b>WhatsApp:</b> +62 821-6311-0597</span>
+                <span><b>WhatsApp:</b> +62 852-6965-6868</span>
             </div>
         </div>
 

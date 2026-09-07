@@ -122,7 +122,7 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-600">{{ __('WhatsApp / Telp') }}:</span>
-                    <span class="font-bold text-emerald-600 text-right">+62 821-6311-0597</span>
+                    <span class="font-bold text-emerald-600 text-right">+62 852-6965-6868</span>
                 </div>
             </div>
         </div>
