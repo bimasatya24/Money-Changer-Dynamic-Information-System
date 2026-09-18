@@ -331,7 +331,7 @@
                         <h3 class="font-bold text-gray-800 text-lg">{{ __('Kantor Bandar Jaya') }}</h3>
                     </div>
                     <p class="text-xs text-gray-500 font-medium mb-3">
-                        <b>{{ __('No. Telepon') }}:</b> +62 857-8951-0332
+                        <b>{{ __('No. Telepon') }}:</b> +62 853-6966-7788
                     </p>
 
                     <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-600 mb-4 space-y-1">
