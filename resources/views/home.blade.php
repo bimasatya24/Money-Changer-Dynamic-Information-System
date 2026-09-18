@@ -23,12 +23,6 @@
                 class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors">
                 {{ __('Pemesanan Valas') }}
             </a>
-            <a href="{{ config('app.kasir_url', env('KASIR_URL', 'http://localhost:8000')) }}"
-                target="_blank"
-                class="px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors flex items-center gap-1">
-                <i class="fa-solid fa-cash-register"></i>
-                {{ __('Kasir') }}
-            </a>
         </div>
 
         <div class="flex items-center space-x-1.5 bg-blue-700 p-1 rounded-xl text-xs font-semibold">
@@ -145,8 +139,8 @@
                         <tr class="bg-blue-600 text-white text-sm font-semibold tracking-wide">
                             <th class="py-3.5 px-4 text-left pl-6">{{ __('MATA UANG') }}</th>
                             <th class="py-3.5 px-4">{{ __('PECAHAN') }}</th>
-                            <th class="py-3.5 px-4 bg-blue-700">{{ __('BELI') }} (IDR)</th>
-                            <th class="py-3.5 px-4 bg-blue-800">{{ __('JUAL') }} (IDR)</th>
+                            <th class="py-3.5 px-4 bg-blue-700">{{ __('BSV BELI') }} (IDR)</th>
+                            <th class="py-3.5 px-4 bg-blue-800">{{ __('BSV JUAL') }} (IDR)</th>
                             <th class="py-2.5 px-4 text-center">
                                 <div
                                     class="flex items-center justify-center gap-1.5 bg-blue-700/80 p-1 rounded-xl w-max mx-auto text-xs">
@@ -286,7 +280,7 @@
                 </div>
 
                 <div class="p-4 bg-gray-50 border-t border-gray-100">
-                    <a href="http://wa.me/6282163110597" target="_blank" rel="noopener noreferrer"
+                    <a href="http://wa.me/6285269656868" target="_blank" rel="noopener noreferrer"
                         class="flex items-center justify-center gap-2 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                         <span>{{ __('Chat Via WhatsApp') }}</span>

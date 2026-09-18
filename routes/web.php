@@ -76,6 +76,12 @@ Route::get('/pemesanan-valas', function () {
     return view('pemesanan-valas');
 })->name('pemesanan-valas');
 
+Route::get('/kasir', function () {
+    return redirect()->away(config('app.kasir_url', env('KASIR_URL', 'http://127.0.0.1:8000')));
+})->name('kasir');
+
+Route::redirect('/cashier', '/kasir');
+
 // =========================
 // AUTH PELANGGAN
 // =========================

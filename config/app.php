@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'kasir_url' => env('KASIR_URL', 'http://127.0.0.1:8000'),
+
 ];
