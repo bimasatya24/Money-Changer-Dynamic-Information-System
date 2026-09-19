@@ -7,6 +7,12 @@ return [
     'numeric' => 'The :attribute field must be a number.',
     'digits' => 'The :attribute field must be :digits digits.',
     'unique' => 'The :attribute has already been taken.',
+    'min' => [
+        'numeric' => 'The :attribute field must be at least :min.',
+        'file' => 'The :attribute field must be at least :min kilobytes.',
+        'string' => 'The :attribute field must be at least :min characters.',
+        'array' => 'The :attribute field must have at least :min items.',
+    ],
 
     'attributes' => [
         'name' => 'name',

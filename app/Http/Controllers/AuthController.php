@@ -44,6 +44,11 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:users,name'],
             'password' => ['required', 'string', 'min:8'],
+        ], [
+            'name.required' => __('Kolom nama wajib diisi.'),
+            'name.unique' => __('Nama sudah digunakan.'),
+            'password.required' => __('Kolom password wajib diisi.'),
+            'password.min' => __('Password minimal harus 8 karakter.'),
         ]);
 
         User::create([

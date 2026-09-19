@@ -7,6 +7,12 @@ return [
     'numeric' => 'Kolom :attribute harus berupa angka.',
     'digits' => 'Kolom :attribute harus terdiri dari :digits digit.',
     'unique' => ':attribute sudah digunakan.',
+    'min' => [
+        'numeric' => 'Kolom :attribute minimal bernilai :min.',
+        'file' => 'Ukuran file :attribute minimal :min kilobita.',
+        'string' => 'Kolom :attribute minimal harus :min karakter.',
+        'array' => 'Kolom :attribute minimal harus memiliki :min item.',
+    ],
 
     'attributes' => [
         'name' => 'nama',

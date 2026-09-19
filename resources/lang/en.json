@@ -186,6 +186,9 @@
     "Nama atau Password salah.": "Incorrect name or password.",
     "Akun berhasil dibuat. Silakan masuk.": "Account created successfully. Please log in.",
     "Data profil KTP berhasil disimpan.": "ID card information saved successfully.",
-    "Silakan lengkapi data identitas KTP Anda terlebih dahulu sebelum melakukan pemesanan.": "Please complete your ID card information before placing an order.",
-    "Senin - Jumat: 08.45 - 17.00 | Sabtu: 08.45 - 14.30": "Monday - Friday: 08.45 - 17.00 | Saturday: 08.45 - 14.30"
+    "Senin - Jumat: 08.45 - 17.00 | Sabtu: 08.45 - 14.30": "Monday - Friday: 08.45 - 17.00 | Saturday: 08.45 - 14.30",
+    "Password minimal harus 8 karakter.": "Password must be at least 8 characters.",
+    "Kolom nama wajib diisi.": "The name field is required.",
+    "Nama sudah digunakan.": "The name has already been taken.",
+    "Kolom password wajib diisi.": "The password field is required."
 }
